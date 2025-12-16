@@ -1,4 +1,4 @@
 # ------------------------
 # Logs de dbt
 # ------------------------
-transformation/logs
+/logs

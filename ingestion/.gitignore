@@ -1,0 +1,9 @@
+# ------------------------
+# Configuraciones Bases de Datos
+# ------------------------
+db_config.py
+
+# ------------------------
+# Archivos caché python
+# ------------------------
+/__pycache__/
