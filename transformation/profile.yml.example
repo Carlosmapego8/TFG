@@ -1,0 +1,23 @@
+tfg_dbt_project:
+  outputs:
+    dev:
+      dbname: [database]
+      host: localhost
+      password: [password]
+      port: 5432
+      schema: [schema]
+      threads: 1
+      type: postgres
+      user: [user]
+    
+    prod:
+      dbname: [database]
+      host: localhost
+      password: [password]
+      port: 5432
+      schema: [schema]
+      threads: 1
+      type: postgres
+      user: [user]
+      
+  target: dev
