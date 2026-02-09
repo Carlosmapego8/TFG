@@ -1,0 +1,22 @@
+database:
+  type: postgres
+  config_file: "db_config.py"
+  default_schema: "raw"
+
+ingestions:
+  - type: csv
+    path: "data/test.csv"
+    schema_name: "staging"
+
+  - type: csv
+    path: "data/test_2.csv"
+    schema_name: "staging_2"
+    table_name: "custom_table_name_2"
+
+  - type: csv
+    path: "data/test_3.csv"
+    table_name: "custom_table_name_3"
+
+transformations: []
+
+analytics: null
