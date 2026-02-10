@@ -1,22 +1,24 @@
 database:
   type: postgres
   config_file: "db_config.py"
-  default_schema: "raw"
 
 ingestions:
   - type: csv
     path: "data/test.csv"
-    schema_name: "staging"
+    schema_name: "raw"
+    table_name: "clientes_ext"
 
-  - type: csv
-    path: "data/test_2.csv"
-    schema_name: "staging_2"
-    table_name: "custom_table_name_2"
+  - type: csv_external
+    path: "data/test.csv"
+    schema_name: external_2
+    table_name: clientes_ext_4
 
-  - type: csv
-    path: "data/test_3.csv"
-    table_name: "custom_table_name_3"
+  - type: postgres
+    source_schema: "test"
+    source_table: "test"
+    schema_name: "raw"
+    table_name: "orders_ext"
+    source_db_config: "db_config.py"
 
 transformations: []
-
 analytics: null

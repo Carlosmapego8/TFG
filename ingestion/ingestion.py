@@ -22,8 +22,8 @@ class Ingestion(ABC):
         Lógica común de carga: usa la BD destino.
         """
         self.db_target.create_schema(self.schema_name)
-        self.db_target.create_table(self.schema_name, self.table_name, self.headers)
-        self.db_target.insert_rows(self.schema_name, self.table_name, self.headers, self.rows)
+        self.db_target.create_table(self.schema_name, self.table_name, self.columns)
+        self.db_target.insert_rows(self.schema_name, self.table_name, self.columns, self.rows)
         self.db_target.close()
 
     def run(self):

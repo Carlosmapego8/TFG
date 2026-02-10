@@ -10,7 +10,7 @@ class CSVIngestion(Ingestion):
 
         super().__init__(table_name=table_name, schema_name=schema_name, db_target=db_target)
         self.csv_path = csv_path
-        self.headers = []
+        self.columns = []
         self.rows = []
 
     @staticmethod
@@ -20,5 +20,5 @@ class CSVIngestion(Ingestion):
     def extract(self):
         with open(self.csv_path, newline="", encoding="utf-8") as f:
             reader = csv.reader(f)
-            self.headers = next(reader)
+            self.columns = next(reader)
             self.rows = list(reader)
