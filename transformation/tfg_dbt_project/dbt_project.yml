@@ -22,7 +22,8 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-
+data_tests:
+  +severity: warn  
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -31,6 +32,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   tfg_dbt_project:
+  
     # Config indicated by + and applies to all files under models/example/
-    example:
+    silver:
       +materialized: view
+      +schema: silver

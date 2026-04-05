@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: bronze_json
+    schema: staging
+    tables:
+      - name: euro_groups_json
+        description: "Raw JSON data for Euro tournaments"
+        columns:
+          - name: data
+            description: "Full tournament JSON"

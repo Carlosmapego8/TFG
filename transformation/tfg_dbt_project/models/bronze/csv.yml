@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: bronze_csv
+    schema: staging
+    tables:
+      - name: euro_matches
+        description: "Raw matches CSV imported to Postgres"
+        columns:
+          - name: match_number
+            description: "Número de partido"
+          - name: round_number
+            description: "Número de ronda"
+          - name: date
+            description: "Fecha y hora en formato DD/MM/YYYY HH24:MI"
+          - name: location
+            description: "Nombre del estadio"
+          - name: home_team
+            description: "Equipo local (texto)"
+          - name: away_team
+            description: "Equipo visitante (texto)"
+          - name: group
+            description: "Nombre de grupo"
+          - name: result
+            description: "Resultado en formato X - Y"

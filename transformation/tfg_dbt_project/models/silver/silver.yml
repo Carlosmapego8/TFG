@@ -1,0 +1,145 @@
+version: 2
+
+models:
+
+  - name: tournaments
+    description: "Tabla de torneos normalizados desde el JSON."
+    columns:
+      - name: tournament_id
+        description: "Clave surrogate única por torneo."
+        tests:
+          - unique
+          - not_null
+      - name: tournament_name
+        description: "Nombre del torneo (ej. Euro 2024)."
+        tests:
+          - not_null
+      - name: year
+        description: "Año del torneo."
+        tests:
+          - not_null
+
+  - name: groups
+    description: "Tabla de grupos únicos, independientemente del torneo."
+    columns:
+      - name: group_id
+        description: "Clave surrogate única por grupo."
+        tests:
+          - unique
+          - not_null
+      - name: group_name
+        description: "Nombre del grupo (A, B, C, ...)."
+        tests:
+          - not_null
+
+  - name: teams
+    description: "Dimensión de equipos con clave surrogate."
+    columns:
+      - name: team_id
+        description: "Clave surrogate única por equipo."
+        tests:
+          - unique
+          - not_null
+      - name: team_name
+        description: "Nombre del equipo."
+        tests:
+          - not_null
+      - name: team_code
+        description: "Código de 3 letras del equipo (ej. GER, ESP)."
+        tests:
+          - not_null
+          - unique
+
+  - name: re_team_groups
+    description: "Tabla puente que relaciona equipo, grupo y torneo."
+    columns:
+      - name: team_group_id
+        description: "Clave surrogate única de la relación equipo-grupo-torneo."
+        tests:
+          - unique
+          - not_null
+      - name: team_id
+        description: "FK hacia teams."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('teams')
+              field: team_id
+      - name: group_id
+        description: "FK hacia groups."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('groups')
+              field: group_id
+      - name: tournament_id
+        description: "FK hacia tournaments."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('tournaments')
+              field: tournament_id
+
+  - name: stadiums
+    description: "Dimensión de estadios única."
+    columns:
+      - name: stadium_id
+        description: "Clave surrogate única por estadio."
+        tests:
+          - unique
+          - not_null
+      - name: stadium_name
+        description: "Nombre del estadio."
+        tests:
+          - not_null
+          - unique
+
+  - name: matches
+    description: "Tabla de partidos normalizados desde CSV, con goles y llaves surrogate."
+    columns:
+      - name: match_id
+        description: "Clave surrogate única por partido."
+        tests:
+          - unique
+          - not_null
+      - name: match_number
+        description: "Número del partido en el torneo."
+        tests:
+          - not_null
+      - name: round_number
+        description: "Ronda del partido."
+        tests:
+          - not_null
+      - name: match_date
+        description: "Fecha y hora del partido."
+        tests:
+          - not_null
+      - name: stadium_id
+        description: "FK hacia stadiums."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stadiums')
+              field: stadium_id
+      - name: home_team_id
+        description: "FK hacia teams para el equipo local."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('teams')
+              field: team_id
+      - name: away_team_id
+        description: "FK hacia teams para el equipo visitante."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('teams')
+              field: team_id
+      - name: home_goals
+        description: "Goles del equipo local."
+        tests:
+          - not_null
+      - name: away_goals
+        description: "Goles del equipo visitante."
+        tests:
+          - not_null
