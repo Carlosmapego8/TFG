@@ -1,0 +1,201 @@
+version: 2
+
+models:
+
+  # ========================
+  # DIMENSIONS
+  # ========================
+
+  - name: dim_teams
+    description: "Dimensión de equipos participantes en los torneos."
+    columns:
+      - name: team_id
+        description: "Clave surrogate única del equipo."
+        tests:
+          - unique
+          - not_null
+
+      - name: team_name
+        description: "Nombre del equipo (nombre canónico normalizado)."
+        tests:
+          - not_null
+
+      - name: team_code
+        description: "Código de 3 letras del equipo (ISO o similar)."
+        tests:
+          - not_null
+          - unique
+
+
+  - name: dim_groups
+    description: "Dimensión de grupos (A, B, C...) independiente del torneo."
+    columns:
+      - name: group_id
+        description: "Clave surrogate única del grupo."
+        tests:
+          - unique
+          - not_null
+
+      - name: group_name
+        description: "Nombre del grupo."
+        tests:
+          - not_null
+
+
+  - name: dim_tournaments
+    description: "Dimensión de torneos con su año correspondiente."
+    columns:
+      - name: tournament_id
+        description: "Clave surrogate única del torneo."
+        tests:
+          - unique
+          - not_null
+
+      - name: tournament_name
+        description: "Nombre del torneo (ej. Euro Cup)."
+        tests:
+          - not_null
+
+      - name: year
+        description: "Año del torneo."
+        tests:
+          - not_null
+
+
+  - name: dim_stadiums
+    description: "Dimensión de estadios donde se juegan los partidos."
+    columns:
+      - name: stadium_id
+        description: "Clave surrogate única del estadio."
+        tests:
+          - unique
+          - not_null
+
+      - name: stadium_name
+        description: "Nombre del estadio."
+        tests:
+          - not_null
+          - unique
+
+
+  - name: dim_date
+    description: "Dimensión de fechas derivada de la fecha de los partidos."
+    columns:
+      - name: date_id
+        description: "Clave surrogate única de la fecha."
+        tests:
+          - unique
+          - not_null
+
+      - name: full_date
+        description: "Fecha completa (YYYY-MM-DD)."
+        tests:
+          - not_null
+          - unique
+
+      - name: year
+        description: "Año de la fecha."
+        tests:
+          - not_null
+
+      - name: month
+        description: "Mes de la fecha (1-12)."
+        tests:
+          - not_null
+
+      - name: day
+        description: "Día del mes."
+        tests:
+          - not_null
+
+      - name: weekday
+        description: "Día de la semana en formato texto."
+        tests:
+          - not_null
+
+      - name: hour
+        description: "Hora del partido."
+        tests:
+          - not_null
+
+
+  # ========================
+  # FACT TABLE
+  # ========================
+
+  - name: fact_matches
+    description: "Tabla de hechos que contiene la información de cada partido con métricas y claves a dimensiones."
+    columns:
+      - name: match_id
+        description: "Clave surrogate única del partido."
+        tests:
+          - unique
+          - not_null
+
+      - name: tournament_id
+        description: "FK hacia dim_tournaments."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tournaments')
+              field: tournament_id
+
+      - name: group_id
+        description: "FK hacia dim_groups."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_groups')
+              field: group_id
+
+      - name: stadium_id
+        description: "FK hacia dim_stadiums."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_stadiums')
+              field: stadium_id
+
+      - name: home_team_id
+        description: "FK hacia dim_teams (equipo local)."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_teams')
+              field: team_id
+
+      - name: away_team_id
+        description: "FK hacia dim_teams (equipo visitante)."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_teams')
+              field: team_id
+
+      - name: date_id
+        description: "FK hacia dim_date."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+      - name: match_number
+        description: "Número identificador del partido dentro del torneo."
+        tests:
+          - not_null
+
+      - name: round_number
+        description: "Número de ronda del partido."
+        tests:
+          - not_null
+
+      - name: home_goals
+        description: "Goles anotados por el equipo local."
+        tests:
+          - not_null
+
+      - name: away_goals
+        description: "Goles anotados por el equipo visitante."
+        tests:
+          - not_null
