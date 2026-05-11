@@ -4,7 +4,7 @@ with source as (
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(["data->>'name'"]) }} as tournament_id,
+    {{ dbt_utils.generate_surrogate_key(["data->>'name'", "(data->>'year')::int"]) }} as tournament_id,
     data->>'name' as tournament_name,
     (data->>'year')::int as year
 from source

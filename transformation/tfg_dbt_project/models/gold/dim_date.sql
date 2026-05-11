@@ -1,13 +1,13 @@
 with dates as (
-    select distinct match_date
+    select distinct match_date::date as date_id
     from {{ ref('matches') }}
 )
 
 select
-    match_date::date as date_id,
-    extract(year from match_date) as year,
-    extract(month from match_date) as month,
-    extract(day from match_date) as day,
-    to_char(match_date, 'Day') as weekday,
-    extract(hour from match_date) as hour
+    date_id,
+    date_id as full_date,
+    extract(year from date_id)::int as year,
+    extract(month from date_id)::int as month,
+    extract(day from date_id)::int as day,
+    trim(to_char(date_id, 'Day')) as weekday
 from dates

@@ -82,7 +82,7 @@ models:
     description: "Dimensión de fechas derivada de la fecha de los partidos."
     columns:
       - name: date_id
-        description: "Clave surrogate única de la fecha."
+        description: "Clave de la fecha (DATE)."
         tests:
           - unique
           - not_null
@@ -113,17 +113,12 @@ models:
         tests:
           - not_null
 
-      - name: hour
-        description: "Hora del partido."
-        tests:
-          - not_null
-
 
   # ========================
   # FACT TABLE
   # ========================
 
-  - name: fact_matches
+  - name: fct_matches
     description: "Tabla de hechos que contiene la información de cada partido con métricas y claves a dimensiones."
     columns:
       - name: match_id
@@ -141,12 +136,13 @@ models:
               field: tournament_id
 
       - name: group_id
-        description: "FK hacia dim_groups."
+        description: "FK hacia dim_groups (NULL en partidos eliminatorios)."
         tests:
-          - not_null
           - relationships:
               to: ref('dim_groups')
               field: group_id
+              config:
+                severity: warn
 
       - name: stadium_id
         description: "FK hacia dim_stadiums."
@@ -190,6 +186,11 @@ models:
         tests:
           - not_null
 
+      - name: match_hour
+        description: "Hora de inicio del partido."
+        tests:
+          - not_null
+
       - name: home_goals
         description: "Goles anotados por el equipo local."
         tests:
@@ -199,3 +200,131 @@ models:
         description: "Goles anotados por el equipo visitante."
         tests:
           - not_null
+
+      - name: total_goals
+        description: "Total de goles en el partido (home_goals + away_goals)."
+        tests:
+          - not_null
+
+      - name: result
+        description: "Resultado del partido: home_win, away_win o draw."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['home_win', 'away_win', 'draw']
+
+
+  # ========================
+  # KPIs
+  # ========================
+
+  - name: kpi_team_stats
+    description: "Estadísticas agregadas por equipo (local + visitante combinadas)."
+    columns:
+      - name: team_id
+        description: "FK hacia dim_teams."
+        tests:
+          - unique
+          - not_null
+      - name: team_name
+        description: "Nombre del equipo."
+      - name: team_code
+        description: "Código de 3 letras del equipo."
+      - name: matches_played
+        description: "Partidos jugados en total."
+      - name: wins
+        description: "Victorias totales."
+      - name: draws
+        description: "Empates totales."
+      - name: losses
+        description: "Derrotas totales."
+      - name: goals_for
+        description: "Goles a favor."
+      - name: goals_against
+        description: "Goles en contra."
+      - name: goal_difference
+        description: "Diferencia de goles (goals_for - goals_against)."
+      - name: points
+        description: "Puntos totales (3 por victoria, 1 por empate)."
+      - name: avg_goals_per_match
+        description: "Media de goles a favor por partido."
+
+  - name: kpi_tournament_summary
+    description: "Resumen estadístico global del torneo."
+    columns:
+      - name: tournament_id
+        description: "FK hacia dim_tournaments."
+        tests:
+          - unique
+          - not_null
+      - name: total_matches
+        description: "Total de partidos jugados."
+      - name: total_goals
+        description: "Total de goles marcados."
+      - name: avg_goals_per_match
+        description: "Media de goles por partido."
+      - name: max_goals_in_match
+        description: "Máximo de goles en un solo partido."
+      - name: total_home_wins
+        description: "Victorias como local."
+      - name: total_away_wins
+        description: "Victorias como visitante."
+      - name: total_draws
+        description: "Empates totales."
+      - name: home_win_pct
+        description: "Porcentaje de victorias locales."
+      - name: away_win_pct
+        description: "Porcentaje de victorias visitantes."
+      - name: draw_pct
+        description: "Porcentaje de empates."
+
+  - name: kpi_stadium_stats
+    description: "Estadísticas por estadio."
+    columns:
+      - name: stadium_id
+        description: "FK hacia dim_stadiums."
+        tests:
+          - unique
+          - not_null
+      - name: stadium_name
+        description: "Nombre del estadio."
+      - name: matches_hosted
+        description: "Partidos celebrados."
+      - name: total_goals
+        description: "Total de goles en el estadio."
+      - name: avg_goals_per_match
+        description: "Media de goles por partido en el estadio."
+      - name: home_wins
+        description: "Victorias locales."
+      - name: away_wins
+        description: "Victorias visitantes."
+      - name: draws
+        description: "Empates."
+
+  - name: kpi_group_standings
+    description: "Clasificación de la fase de grupos."
+    columns:
+      - name: group_name
+        description: "Nombre del grupo (A, B, C...)."
+        tests:
+          - not_null
+      - name: team_name
+        description: "Nombre del equipo."
+      - name: team_code
+        description: "Código de 3 letras del equipo."
+      - name: matches_played
+        description: "Partidos jugados en fase de grupos."
+      - name: wins
+        description: "Victorias."
+      - name: draws
+        description: "Empates."
+      - name: losses
+        description: "Derrotas."
+      - name: goals_for
+        description: "Goles a favor."
+      - name: goals_against
+        description: "Goles en contra."
+      - name: goal_difference
+        description: "Diferencia de goles."
+      - name: points
+        description: "Puntos (3V + 1E)."

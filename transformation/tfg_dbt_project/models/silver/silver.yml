@@ -2,7 +2,7 @@ version: 2
 
 models:
 
-  - name: tournaments
+  - name: tournament
     description: "Tabla de torneos normalizados desde el JSON."
     columns:
       - name: tournament_id
@@ -50,7 +50,7 @@ models:
           - not_null
           - unique
 
-  - name: re_team_groups
+  - name: re_teams_groups
     description: "Tabla puente que relaciona equipo, grupo y torneo."
     columns:
       - name: team_group_id
@@ -77,7 +77,7 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('tournaments')
+              to: ref('tournament')
               field: tournament_id
 
   - name: stadiums
@@ -135,6 +135,19 @@ models:
           - relationships:
               to: ref('teams')
               field: team_id
+      - name: tournament_id
+        description: "FK hacia tournament."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('tournament')
+              field: tournament_id
+      - name: group_id
+        description: "FK hacia groups (NULL en partidos eliminatorios)."
+        tests:
+          - relationships:
+              to: ref('groups')
+              field: group_id
       - name: home_goals
         description: "Goles del equipo local."
         tests:

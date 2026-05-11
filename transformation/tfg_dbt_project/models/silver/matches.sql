@@ -34,6 +34,14 @@ teams as (
         team_id,
         team_name
     from {{ ref('teams') }}
+),
+
+team_groups as (
+    select
+        team_id,
+        group_id,
+        tournament_id
+    from {{ ref('re_teams_groups') }}
 )
 
 select
@@ -44,9 +52,12 @@ select
     s.stadium_id,
     t_home.team_id as home_team_id,
     t_away.team_id as away_team_id,
+    tg.tournament_id,
+    tg.group_id,
     m.home_goals,
     m.away_goals
 from parsed m
 left join stadiums s on s.stadium_name = m.location
 left join teams t_home on t_home.team_name = m.home_team
 left join teams t_away on t_away.team_name = m.away_team
+left join team_groups tg on tg.team_id = t_home.team_id
