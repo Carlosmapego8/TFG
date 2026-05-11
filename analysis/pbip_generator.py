@@ -9,7 +9,7 @@ from pathlib import Path
 from datetime import datetime
 
 
-def generate_pbip_project(db_config: dict, output_dir: str = "."):
+def generate_pbip_project(db_config: dict, output_dir: str = ".", project_name: str = "euro_analysis"):
     """
     Generates a complete PBIP (Power BI Project) structure with:
     - TOM model (model.bim) pointing to PostgreSQL gold views
@@ -20,10 +20,16 @@ def generate_pbip_project(db_config: dict, output_dir: str = "."):
         db_config: Dictionary with PostgreSQL connection details
                   {host, dbname, user, password, port}
         output_dir: Directory where PBIP files will be created
+        project_name: Name of the Power BI project (default: euro_analysis)
     """
-
-    project_name = "euro_analysis"
     project_dir = Path(output_dir) / project_name
+    pbip_path = project_dir / f"{project_name}.pbip"
+
+    # If structure already exists, skip generation to preserve manual changes
+    if pbip_path.exists():
+        print(f"[SKIP] PBIP project already exists at: {project_dir}")
+        print(f"       Skipping generation to preserve manual changes.")
+        return str(project_dir)
 
     # Create directory structure
     semantic_model_dir = project_dir / f"{project_name}.SemanticModel"

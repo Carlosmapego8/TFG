@@ -26,3 +26,4 @@ transformations: []
 analytics:
   db_config_path: "db_config.py"
   output_dir: "analysis"
+  project_name: "euro_analysis"

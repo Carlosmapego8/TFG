@@ -113,7 +113,8 @@ def main():
                 analytics_instance = Analytics(
                     db_config_path=analytics_config.get("db_config_path",
                                                         config["database"]["config_file"]),
-                    output_dir=analytics_config.get("output_dir", "analysis")
+                    output_dir=analytics_config.get("output_dir", "analysis"),
+                    project_name=analytics_config.get("project_name", "euro_analysis")
                 )
                 print("[OK] Componente Analytics configurado")
             except Exception as e:

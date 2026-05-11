@@ -21,16 +21,18 @@ class Analytics:
     Called by Orchestrator after transformations are complete.
     """
 
-    def __init__(self, db_config_path: str, output_dir: str = None):
+    def __init__(self, db_config_path: str, output_dir: str = None, project_name: str = None):
         """
         Initialize Analytics component.
 
         Args:
             db_config_path: Path to the Python file with DB_CONFIG dictionary
             output_dir: Directory where PBIP files will be created (default: current dir)
+            project_name: Name of the Power BI project (default: euro_analysis)
         """
         self.db_config_path = db_config_path
         self.output_dir = output_dir or os.getcwd()
+        self.project_name = project_name or "euro_analysis"
         self.db_config = None
 
     def _load_db_config(self):
@@ -77,7 +79,7 @@ class Analytics:
 
             # Step 3: Generate PBIP project
             print("\nStep 3/3: Generating PBIP project...")
-            project_path = generate_pbip_project(self.db_config, self.output_dir)
+            project_path = generate_pbip_project(self.db_config, self.output_dir, self.project_name)
 
             print("\n" + "=" * 70)
             print("✅ PBIP PROJECT GENERATED SUCCESSFULLY")
@@ -87,7 +89,7 @@ class Analytics:
             print("   1. Ensure PostgreSQL ODBC driver is installed on your machine")
             print("   2. Open Power BI Desktop")
             print("   3. Enable PBIP support: File → Options → Preview Features → Power BI Projects")
-            print(f"   4. Open the project file: {Path(project_path) / 'euro_analysis.pbip'}")
+            print(f"   4. Open the project file: {Path(project_path) / f'{self.project_name}.pbip'}")
             print("   5. Configure/refresh the PostgreSQL connection with your credentials")
             print("   6. Create visualizations using the tables, relationships, and measures\n")
 
