@@ -3,17 +3,206 @@
   "config": {
     "hasCustomConnectivityActions": false,
     "inactiveArtifacts": [],
-    "queries": [],
+    "queries": [
+      {
+        "Name": "Euro2024_Scores",
+        "Source": "Table",
+        "Expression": "let Source = Table.FromRecords({{[Country]=\"Spain\",[Points]=548,[Rank]=1,[Semi]=\"Final\"},{[Country]=\"Ukraine\",[Points]=453,[Rank]=2,[Semi]=\"Semi-Final 1\"},{[Country]=\"Italy\",[Points]=418,[Rank]=3,[Semi]=\"Final\"},{[Country]=\"France\",[Points]=415,[Rank]=4,[Semi]=\"Final\"}}) in Source"
+      },
+      {
+        "Name": "Euro2024_Summary",
+        "Source": "Table",
+        "Expression": "let Source = Table.FromRecords({{[Metric]=\"Total Countries\",[Value]=37},{[Metric]=\"Total Votes\",[Value]=1200000},{[Metric]=\"Average Points\",[Value]=320}}) in Source"
+      }
+    ],
     "queryGroups": [],
+    "tables": [
+      {
+        "name": "Euro2024_Scores",
+        "columns": [
+          {
+            "name": "Country",
+            "dataType": "string",
+            "formatString": ""
+          },
+          {
+            "name": "Points",
+            "dataType": "integer",
+            "formatString": "0"
+          },
+          {
+            "name": "Rank",
+            "dataType": "integer",
+            "formatString": "0"
+          },
+          {
+            "name": "Semi",
+            "dataType": "string",
+            "formatString": ""
+          }
+        ]
+      },
+      {
+        "name": "Euro2024_Summary",
+        "columns": [
+          {
+            "name": "Metric",
+            "dataType": "string",
+            "formatString": ""
+          },
+          {
+            "name": "Value",
+            "dataType": "integer",
+            "formatString": "0"
+          }
+        ]
+      }
+    ],
     "report": [
       {
         "displayName": "Euro 2024 Analysis",
         "height": 720,
         "width": 1280,
         "tabOrder": 0,
-        "visualContainers": []
+        "pageNumber": 1,
+        "visualContainers": [
+          {
+            "displayName": "Total Countries",
+            "x": 20,
+            "y": 20,
+            "width": 200,
+            "height": 120,
+            "visualType": "card",
+            "query": "Euro2024_Summary",
+            "fields": {
+              "values": "Value"
+            },
+            "filters": [
+              {
+                "field": "Metric",
+                "operator": "equals",
+                "value": "Total Countries"
+              }
+            ]
+          },
+          {
+            "displayName": "Total Votes",
+            "x": 240,
+            "y": 20,
+            "width": 200,
+            "height": 120,
+            "visualType": "card",
+            "query": "Euro2024_Summary",
+            "fields": {
+              "values": "Value"
+            },
+            "filters": [
+              {
+                "field": "Metric",
+                "operator": "equals",
+                "value": "Total Votes"
+              }
+            ]
+          },
+          {
+            "displayName": "Average Points",
+            "x": 460,
+            "y": 20,
+            "width": 200,
+            "height": 120,
+            "visualType": "card",
+            "query": "Euro2024_Summary",
+            "fields": {
+              "values": "Value"
+            },
+            "filters": [
+              {
+                "field": "Metric",
+                "operator": "equals",
+                "value": "Average Points"
+              }
+            ]
+          },
+          {
+            "displayName": "Países por Puntos",
+            "x": 20,
+            "y": 160,
+            "width": 640,
+            "height": 400,
+            "visualType": "barChart",
+            "query": "Euro2024_Scores",
+            "fields": {
+              "category": "Country",
+              "values": "Points"
+            },
+            "sorting": {
+              "field": "Points",
+              "direction": "descending"
+            },
+            "legend": {
+              "position": "bottom"
+            }
+          },
+          {
+            "displayName": "Tabla de Resultados",
+            "x": 680,
+            "y": 160,
+            "width": 580,
+            "height": 400,
+            "visualType": "table",
+            "query": "Euro2024_Scores",
+            "fields": [
+              "Country",
+              "Points",
+              "Rank",
+              "Semi"
+            ],
+            "sorting": {
+              "field": "Points",
+              "direction": "descending"
+            }
+          }
+        ]
       }
     ],
-    "spelling": {}
+    "spelling": {},
+    "dataModelSchema": {
+      "tables": [
+        {
+          "name": "Euro2024_Scores",
+          "columns": [
+            {
+              "name": "Country",
+              "type": "text"
+            },
+            {
+              "name": "Points",
+              "type": "number"
+            },
+            {
+              "name": "Rank",
+              "type": "number"
+            },
+            {
+              "name": "Semi",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "Euro2024_Summary",
+          "columns": [
+            {
+              "name": "Metric",
+              "type": "text"
+            },
+            {
+              "name": "Value",
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
