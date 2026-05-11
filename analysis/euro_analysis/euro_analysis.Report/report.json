@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "config": {
+    "hasCustomConnectivityActions": false,
+    "inactiveArtifacts": [],
+    "queries": [],
+    "queryGroups": [],
+    "report": [
+      {
+        "displayName": "Euro 2024 Analysis",
+        "height": 720,
+        "width": 1280,
+        "tabOrder": 0,
+        "visualContainers": []
+      }
+    ],
+    "spelling": {}
+  }
+}

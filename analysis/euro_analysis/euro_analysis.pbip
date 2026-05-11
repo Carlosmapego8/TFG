@@ -1,0 +1,6 @@
+{
+  "version": "1.0",
+  "name": "euro_analysis",
+  "datasetFolder": "euro_analysis.SemanticModel",
+  "reportFolder": "euro_analysis.Report"
+}

@@ -21,4 +21,8 @@ ingestions:
     source_db_config: "db_config.py"
 
 transformations: []
-analytics: null
+
+# Analytics component - generates Power BI PBIP project
+analytics:
+  db_config_path: "db_config.py"
+  output_dir: "analysis"

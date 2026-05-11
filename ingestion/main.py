@@ -1,7 +1,9 @@
 import yaml
 import traceback
-import os 
+import os
 import shutil
+import sys
+from pathlib import Path
 
 
 from orchestrator import Orchestrator
@@ -12,6 +14,10 @@ from CSV_External_Ingestion import CSVExternalIngestion
 from Postgre_External_Ingestion import PostgresExternalIngestion
 from Mongo_External_Ingestion import MongoExternalIngestion
 
+# Import Analytics from analysis module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from analysis.analytics import Analytics
+
 
 def main():
     db_target = None
@@ -21,14 +27,14 @@ def main():
             with open("pipeline_config.yml", "r") as f:
                 config = yaml.safe_load(f)
         except Exception as e:
-            print(f"❌ Error leyendo YAML: {e}")
+            print(f"[ERROR] Error leyendo YAML: {e}")
             return
 
         # Crear DB Target
         try:
             db_target = PostgresTarget(config["database"]["config_file"])
         except Exception as e:
-            print(f"❌ Error inicializando PostgresTarget: {e}")
+            print(f"[ERROR] Error inicializando PostgresTarget: {e}")
             traceback.print_exc()
             return
 
@@ -94,29 +100,52 @@ def main():
                 raise ValueError(f"Tipo de ingesta no soportado: {ing_type}")
 
         if not ingestions:
-            print("⚠️ No hay ingestas definidas")
+            print("[WARN] No hay ingestas definidas")
             return
+
+        # Crear componente Analytics si está configurado
+        analytics_instance = None
+        analytics_config = config.get("analytics")
+
+        if analytics_config:
+            try:
+                print("\n[INFO] Configurando componente Analytics...")
+                analytics_instance = Analytics(
+                    db_config_path=analytics_config.get("db_config_path",
+                                                        config["database"]["config_file"]),
+                    output_dir=analytics_config.get("output_dir", "analysis")
+                )
+                print("[OK] Componente Analytics configurado")
+            except Exception as e:
+                print(f"[WARN] Error configurando Analytics: {e}")
+                print("[INFO] El pipeline continuará sin Analytics")
+                traceback.print_exc()
 
         # Orchestrator
         orchestrator = Orchestrator(
             ingestions=ingestions,
             transformations=config.get("transformations", []),
-            analytics=config.get("analytics")
+            analytics=analytics_instance
         )
 
         # Ejecutar
+        print("\n" + "="*70)
+        print("INICIANDO PIPELINE DE DATOS")
+        print("="*70)
         orchestrator.run()
-        print("✅ Pipeline ejecutado correctamente")
+        print("\n" + "="*70)
+        print("[OK] Pipeline ejecutado correctamente")
+        print("="*70 + "\n")
 
     except Exception as e:
-        print(f"❌ Error inesperado: {e}")
+        print(f"[ERROR] Error inesperado: {e}")
         traceback.print_exc()
     finally:
         if db_target:
             try:
                 db_target.close()
             except Exception as e:
-                print(f"⚠️ Error cerrando conexión: {e}")
+                print(f"[WARN] Error cerrando conexión: {e}")
 
 
 if __name__ == "__main__":
