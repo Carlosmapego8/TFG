@@ -3,7 +3,7 @@ import os
 from ingestion import Ingestion
 
 class CSVIngestion(Ingestion):
-    def __init__(self, csv_path: str, schema_name: str, db_target, table_name=None, db_name=None):
+    def __init__(self, csv_path: str, schema_name: str, db_target, table_name=None):
         
         if table_name is None:
             table_name = self.get_table_name(csv_path)

@@ -10,6 +10,7 @@ from CSV_Ingestor import CSVIngestion
 from postgre_ingestor import PostgresIngestion
 from CSV_External_Ingestion import CSVExternalIngestion
 from Postgre_External_Ingestion import PostgresExternalIngestion
+from Mongo_External_Ingestion import MongoExternalIngestion
 
 
 def main():
@@ -72,6 +73,17 @@ def main():
                     PostgresExternalIngestion(
                         source_schema=ing["source_schema"],
                         source_table=ing["source_table"],
+                        schema_name=ing["schema_name"],
+                        table_name=ing.get("table_name"),
+                        db_target=db_target,
+                        source_db_config_path=ing["source_db_config"]
+                    )
+                )
+            elif ing_type == "mongo_external":
+                ingestions.append(
+                    MongoExternalIngestion(
+                        mongo_database=ing["mongo_database"],
+                        mongo_collection=ing["mongo_collection"],
                         schema_name=ing["schema_name"],
                         table_name=ing.get("table_name"),
                         db_target=db_target,

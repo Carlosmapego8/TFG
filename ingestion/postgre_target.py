@@ -2,10 +2,10 @@
 import psycopg2
 from psycopg2 import sql
 from target import DBTarget
-import importlib.util
 import os
 import shutil
 import csv
+from config_loader import load_config
 
 class PostgresTarget(DBTarget):
     """
@@ -22,19 +22,7 @@ class PostgresTarget(DBTarget):
         if self.conn:
             return
 
-        # Cargar configuración
-        path = os.path.abspath(self.config_path)
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"No se encontró el archivo de configuración: {path}")
-
-        spec = importlib.util.spec_from_file_location("db_config_module", path)
-        config_module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(config_module)
-
-        if not hasattr(config_module, "DB_CONFIG"):
-            raise AttributeError(f"El archivo {path} debe contener un diccionario DB_CONFIG")
-
-        self.config = config_module.DB_CONFIG
+        self.config = load_config(self.config_path, "DB_CONFIG")
         self.conn = psycopg2.connect(**self.config)
 
     def close(self):
@@ -137,12 +125,7 @@ class PostgresTarget(DBTarget):
         self.connect()
         cur = self.conn.cursor()
 
-        # Cargar config de DB fuente
-        path = os.path.abspath(source_db_config_path)
-        spec = importlib.util.spec_from_file_location("source_db_config", path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        DB_CONFIG = module.DB_CONFIG
+        DB_CONFIG = load_config(source_db_config_path, "DB_CONFIG")
 
         sql_statement = f"""
         CREATE EXTENSION IF NOT EXISTS postgres_fdw;
@@ -168,6 +151,57 @@ class PostgresTarget(DBTarget):
         OPTIONS (
             schema_name '{source_schema}',
             table_name '{source_table}'
+        );
+        """
+        cur.execute(sql_statement)
+        self.conn.commit()
+        cur.close()
+
+    # ========================
+    # TABLAS EXTERNAS MONGO
+    # ========================
+    def create_external_mongo_table(
+        self,
+        schema_name,
+        table_name,
+        mongo_database,
+        mongo_collection,
+        columns,
+        source_db_config_path
+    ):
+        """Tabla externa apuntando a MongoDB usando mongo_fdw"""
+        self.connect()
+        cur = self.conn.cursor()
+
+        MONGO_CONFIG = load_config(source_db_config_path, "MONGO_CONFIG")
+
+        columns_sql = ",\n            ".join(f"{col} {typ}" for col, typ in columns)
+
+        sql_statement = f"""
+        CREATE EXTENSION IF NOT EXISTS mongo_fdw;
+
+        CREATE SERVER IF NOT EXISTS remote_mongo
+        FOREIGN DATA WRAPPER mongo_fdw
+        OPTIONS (
+            address '{MONGO_CONFIG['address']}',
+            port '{MONGO_CONFIG['port']}'
+        );
+
+        CREATE USER MAPPING IF NOT EXISTS
+        FOR CURRENT_USER
+        SERVER remote_mongo
+        OPTIONS (
+            username '{MONGO_CONFIG['username']}',
+            password '{MONGO_CONFIG['password']}'
+        );
+
+        CREATE FOREIGN TABLE IF NOT EXISTS {schema_name}.{table_name} (
+            {columns_sql}
+        )
+        SERVER remote_mongo
+        OPTIONS (
+            database '{mongo_database}',
+            collection '{mongo_collection}'
         );
         """
         cur.execute(sql_statement)
