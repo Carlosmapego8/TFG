@@ -10,7 +10,6 @@
       {
         "name": "dim_teams",
         "description": "Dimensión de equipos participantes",
-        "lineageTag": "lineage-dim_teams",
         "partitions": [
           {
             "name": "Partition",
@@ -22,27 +21,14 @@
           }
         ],
         "columns": [
-          {
-            "name": "team_id",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_teams-team_id"
-          },
-          {
-            "name": "team_name",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_teams-team_name"
-          },
-          {
-            "name": "team_code",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_teams-team_code"
-          }
+          { "name": "team_id", "dataType": "string" },
+          { "name": "team_name", "dataType": "string" },
+          { "name": "team_code", "dataType": "string" }
         ]
       },
       {
         "name": "dim_tournaments",
         "description": "Dimensión de torneos",
-        "lineageTag": "lineage-dim_tournaments",
         "partitions": [
           {
             "name": "Partition",
@@ -54,27 +40,14 @@
           }
         ],
         "columns": [
-          {
-            "name": "tournament_id",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_tournaments-tournament_id"
-          },
-          {
-            "name": "tournament_name",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_tournaments-tournament_name"
-          },
-          {
-            "name": "year",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_tournaments-year"
-          }
+          { "name": "tournament_id", "dataType": "string" },
+          { "name": "tournament_name", "dataType": "string" },
+          { "name": "year", "dataType": "string" }
         ]
       },
       {
         "name": "dim_groups",
         "description": "Dimensión de grupos",
-        "lineageTag": "lineage-dim_groups",
         "partitions": [
           {
             "name": "Partition",
@@ -86,22 +59,13 @@
           }
         ],
         "columns": [
-          {
-            "name": "group_id",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_groups-group_id"
-          },
-          {
-            "name": "group_name",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_groups-group_name"
-          }
+          { "name": "group_id", "dataType": "string" },
+          { "name": "group_name", "dataType": "string" }
         ]
       },
       {
         "name": "dim_stadiums",
         "description": "Dimensión de estadios",
-        "lineageTag": "lineage-dim_stadiums",
         "partitions": [
           {
             "name": "Partition",
@@ -113,22 +77,13 @@
           }
         ],
         "columns": [
-          {
-            "name": "stadium_id",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_stadiums-stadium_id"
-          },
-          {
-            "name": "stadium_name",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_stadiums-stadium_name"
-          }
+          { "name": "stadium_id", "dataType": "string" },
+          { "name": "stadium_name", "dataType": "string" }
         ]
       },
       {
         "name": "dim_date",
         "description": "Dimensión de fechas",
-        "lineageTag": "lineage-dim_date",
         "partitions": [
           {
             "name": "Partition",
@@ -140,42 +95,17 @@
           }
         ],
         "columns": [
-          {
-            "name": "date_id",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-date_id"
-          },
-          {
-            "name": "full_date",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-full_date"
-          },
-          {
-            "name": "year",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-year"
-          },
-          {
-            "name": "month",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-month"
-          },
-          {
-            "name": "day",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-day"
-          },
-          {
-            "name": "weekday",
-            "dataType": "string",
-            "lineageTag": "lineage-dim_date-weekday"
-          }
+          { "name": "date_id", "dataType": "string" },
+          { "name": "full_date", "dataType": "string" },
+          { "name": "year", "dataType": "string" },
+          { "name": "month", "dataType": "string" },
+          { "name": "day", "dataType": "string" },
+          { "name": "weekday", "dataType": "string" }
         ]
       },
       {
         "name": "fct_matches",
         "description": "Tabla de hechos - Partidos con métricas",
-        "lineageTag": "lineage-fct_matches",
         "partitions": [
           {
             "name": "Partition",
@@ -187,138 +117,72 @@
           }
         ],
         "columns": [
-          {
-            "name": "match_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-match_id"
-          },
-          {
-            "name": "tournament_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-tournament_id"
-          },
-          {
-            "name": "group_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-group_id"
-          },
-          {
-            "name": "stadium_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-stadium_id"
-          },
-          {
-            "name": "home_team_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-home_team_id"
-          },
-          {
-            "name": "away_team_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-away_team_id"
-          },
-          {
-            "name": "date_id",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-date_id"
-          },
-          {
-            "name": "match_number",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-match_number"
-          },
-          {
-            "name": "round_number",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-round_number"
-          },
-          {
-            "name": "match_hour",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-match_hour"
-          },
-          {
-            "name": "home_goals",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-home_goals"
-          },
-          {
-            "name": "away_goals",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-away_goals"
-          },
-          {
-            "name": "total_goals",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-total_goals"
-          },
-          {
-            "name": "result",
-            "dataType": "string",
-            "lineageTag": "lineage-fct_matches-result"
-          }
+          { "name": "match_id", "dataType": "string" },
+          { "name": "tournament_id", "dataType": "string" },
+          { "name": "group_id", "dataType": "string" },
+          { "name": "stadium_id", "dataType": "string" },
+          { "name": "home_team_id", "dataType": "string" },
+          { "name": "away_team_id", "dataType": "string" },
+          { "name": "date_id", "dataType": "string" },
+          { "name": "match_number", "dataType": "string" },
+          { "name": "round_number", "dataType": "string" },
+          { "name": "match_hour", "dataType": "string" },
+          { "name": "home_goals", "dataType": "string" },
+          { "name": "away_goals", "dataType": "string" },
+          { "name": "total_goals", "dataType": "string" },
+          { "name": "result", "dataType": "string" }
         ],
         "measures": [
           {
             "name": "Total Partidos",
             "expression": "COUNTROWS(fct_matches)",
-            "formatString": "#,0",
-            "lineageTag": "measure-total-matches"
+            "formatString": "#,0"
           },
           {
             "name": "Total Goles",
             "expression": "SUM(fct_matches[total_goals])",
-            "formatString": "#,0",
-            "lineageTag": "measure-total-goals"
+            "formatString": "#,0"
           },
           {
             "name": "Media Goles/Partido",
             "expression": "AVERAGE(fct_matches[total_goals])",
-            "formatString": "0.00",
-            "lineageTag": "measure-avg-goals"
+            "formatString": "0.00"
           },
           {
             "name": "Victorias Local",
             "expression": "CALCULATE(COUNTROWS(fct_matches), fct_matches[result]=\"home_win\")",
-            "formatString": "#,0",
-            "lineageTag": "measure-home-wins"
+            "formatString": "#,0"
           },
           {
             "name": "Victorias Visitante",
             "expression": "CALCULATE(COUNTROWS(fct_matches), fct_matches[result]=\"away_win\")",
-            "formatString": "#,0",
-            "lineageTag": "measure-away-wins"
+            "formatString": "#,0"
           },
           {
             "name": "Empates",
             "expression": "CALCULATE(COUNTROWS(fct_matches), fct_matches[result]=\"draw\")",
-            "formatString": "#,0",
-            "lineageTag": "measure-draws"
+            "formatString": "#,0"
           },
           {
             "name": "% Victoria Local",
             "expression": "DIVIDE([Victorias Local], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-home-win-pct"
+            "formatString": "0.0%"
           },
           {
             "name": "% Victoria Visitante",
             "expression": "DIVIDE([Victorias Visitante], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-away-win-pct"
+            "formatString": "0.0%"
           },
           {
             "name": "% Empate",
             "expression": "DIVIDE([Empates], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-draw-pct"
+            "formatString": "0.0%"
           }
         ]
       },
       {
         "name": "kpi_team_stats",
         "description": "Estadísticas agregadas por equipo",
-        "lineageTag": "lineage-kpi_team_stats",
         "partitions": [
           {
             "name": "Partition",
@@ -330,72 +194,23 @@
           }
         ],
         "columns": [
-          {
-            "name": "team_id",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-team_id"
-          },
-          {
-            "name": "team_name",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-team_name"
-          },
-          {
-            "name": "team_code",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-team_code"
-          },
-          {
-            "name": "matches_played",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-matches_played"
-          },
-          {
-            "name": "wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-wins"
-          },
-          {
-            "name": "draws",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-draws"
-          },
-          {
-            "name": "losses",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-losses"
-          },
-          {
-            "name": "goals_for",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-goals_for"
-          },
-          {
-            "name": "goals_against",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-goals_against"
-          },
-          {
-            "name": "goal_difference",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-goal_difference"
-          },
-          {
-            "name": "points",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-points"
-          },
-          {
-            "name": "avg_goals_per_match",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_team_stats-avg_goals_per_match"
-          }
+          { "name": "team_id", "dataType": "string" },
+          { "name": "team_name", "dataType": "string" },
+          { "name": "team_code", "dataType": "string" },
+          { "name": "matches_played", "dataType": "string" },
+          { "name": "wins", "dataType": "string" },
+          { "name": "draws", "dataType": "string" },
+          { "name": "losses", "dataType": "string" },
+          { "name": "goals_for", "dataType": "string" },
+          { "name": "goals_against", "dataType": "string" },
+          { "name": "goal_difference", "dataType": "string" },
+          { "name": "points", "dataType": "string" },
+          { "name": "avg_goals_per_match", "dataType": "string" }
         ]
       },
       {
         "name": "kpi_tournament_summary",
         "description": "Resumen estadístico global del torneo",
-        "lineageTag": "lineage-kpi_tournament_summary",
         "partitions": [
           {
             "name": "Partition",
@@ -407,67 +222,22 @@
           }
         ],
         "columns": [
-          {
-            "name": "tournament_id",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-tournament_id"
-          },
-          {
-            "name": "total_matches",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-total_matches"
-          },
-          {
-            "name": "total_goals",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-total_goals"
-          },
-          {
-            "name": "avg_goals_per_match",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-avg_goals_per_match"
-          },
-          {
-            "name": "max_goals_in_match",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-max_goals_in_match"
-          },
-          {
-            "name": "total_home_wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-total_home_wins"
-          },
-          {
-            "name": "total_away_wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-total_away_wins"
-          },
-          {
-            "name": "total_draws",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-total_draws"
-          },
-          {
-            "name": "home_win_pct",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-home_win_pct"
-          },
-          {
-            "name": "away_win_pct",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-away_win_pct"
-          },
-          {
-            "name": "draw_pct",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_tournament_summary-draw_pct"
-          }
+          { "name": "tournament_id", "dataType": "string" },
+          { "name": "total_matches", "dataType": "string" },
+          { "name": "total_goals", "dataType": "string" },
+          { "name": "avg_goals_per_match", "dataType": "string" },
+          { "name": "max_goals_in_match", "dataType": "string" },
+          { "name": "total_home_wins", "dataType": "string" },
+          { "name": "total_away_wins", "dataType": "string" },
+          { "name": "total_draws", "dataType": "string" },
+          { "name": "home_win_pct", "dataType": "string" },
+          { "name": "away_win_pct", "dataType": "string" },
+          { "name": "draw_pct", "dataType": "string" }
         ]
       },
       {
         "name": "kpi_stadium_stats",
         "description": "Estadísticas por estadio",
-        "lineageTag": "lineage-kpi_stadium_stats",
         "partitions": [
           {
             "name": "Partition",
@@ -479,52 +249,19 @@
           }
         ],
         "columns": [
-          {
-            "name": "stadium_id",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-stadium_id"
-          },
-          {
-            "name": "stadium_name",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-stadium_name"
-          },
-          {
-            "name": "matches_hosted",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-matches_hosted"
-          },
-          {
-            "name": "total_goals",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-total_goals"
-          },
-          {
-            "name": "avg_goals_per_match",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-avg_goals_per_match"
-          },
-          {
-            "name": "home_wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-home_wins"
-          },
-          {
-            "name": "away_wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-away_wins"
-          },
-          {
-            "name": "draws",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_stadium_stats-draws"
-          }
+          { "name": "stadium_id", "dataType": "string" },
+          { "name": "stadium_name", "dataType": "string" },
+          { "name": "matches_hosted", "dataType": "string" },
+          { "name": "total_goals", "dataType": "string" },
+          { "name": "avg_goals_per_match", "dataType": "string" },
+          { "name": "home_wins", "dataType": "string" },
+          { "name": "away_wins", "dataType": "string" },
+          { "name": "draws", "dataType": "string" }
         ]
       },
       {
         "name": "kpi_group_standings",
         "description": "Clasificación de la fase de grupos",
-        "lineageTag": "lineage-kpi_group_standings",
         "partitions": [
           {
             "name": "Partition",
@@ -536,61 +273,17 @@
           }
         ],
         "columns": [
-          {
-            "name": "group_name",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-group_name"
-          },
-          {
-            "name": "team_name",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-team_name"
-          },
-          {
-            "name": "team_code",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-team_code"
-          },
-          {
-            "name": "matches_played",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-matches_played"
-          },
-          {
-            "name": "wins",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-wins"
-          },
-          {
-            "name": "draws",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-draws"
-          },
-          {
-            "name": "losses",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-losses"
-          },
-          {
-            "name": "goals_for",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-goals_for"
-          },
-          {
-            "name": "goals_against",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-goals_against"
-          },
-          {
-            "name": "goal_difference",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-goal_difference"
-          },
-          {
-            "name": "points",
-            "dataType": "string",
-            "lineageTag": "lineage-kpi_group_standings-points"
-          }
+          { "name": "group_name", "dataType": "string" },
+          { "name": "team_name", "dataType": "string" },
+          { "name": "team_code", "dataType": "string" },
+          { "name": "matches_played", "dataType": "string" },
+          { "name": "wins", "dataType": "string" },
+          { "name": "draws", "dataType": "string" },
+          { "name": "losses", "dataType": "string" },
+          { "name": "goals_for", "dataType": "string" },
+          { "name": "goals_against", "dataType": "string" },
+          { "name": "goal_difference", "dataType": "string" },
+          { "name": "points", "dataType": "string" }
         ]
       }
     ],
@@ -601,10 +294,7 @@
         "fromColumn": "tournament_id",
         "toTable": "dim_tournaments",
         "toColumn": "tournament_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
-        "isActive": true,
-        "lineageTag": "rel-fct-tournament"
+        "isActive": true
       },
       {
         "name": "rel_fct_group",
@@ -612,10 +302,7 @@
         "fromColumn": "group_id",
         "toTable": "dim_groups",
         "toColumn": "group_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
-        "isActive": true,
-        "lineageTag": "rel-fct-group"
+        "isActive": true
       },
       {
         "name": "rel_fct_stadium",
@@ -623,10 +310,7 @@
         "fromColumn": "stadium_id",
         "toTable": "dim_stadiums",
         "toColumn": "stadium_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
-        "isActive": true,
-        "lineageTag": "rel-fct-stadium"
+        "isActive": true
       },
       {
         "name": "rel_fct_home_team",
@@ -634,11 +318,8 @@
         "fromColumn": "home_team_id",
         "toTable": "dim_teams",
         "toColumn": "team_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
         "isActive": true,
-        "crossFilteringBehavior": "bothDirections",
-        "lineageTag": "rel-fct-home-team"
+        "crossFilteringBehavior": "bothDirections"
       },
       {
         "name": "rel_fct_away_team",
@@ -646,11 +327,8 @@
         "fromColumn": "away_team_id",
         "toTable": "dim_teams",
         "toColumn": "team_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
         "isActive": false,
-        "crossFilteringBehavior": "bothDirections",
-        "lineageTag": "rel-fct-away-team"
+        "crossFilteringBehavior": "bothDirections"
       },
       {
         "name": "rel_fct_date",
@@ -658,21 +336,7 @@
         "fromColumn": "date_id",
         "toTable": "dim_date",
         "toColumn": "date_id",
-        "fromCardinality": "many",
-        "toCardinality": "one",
-        "isActive": true,
-        "lineageTag": "rel-fct-date"
-      }
-    ],
-    "cultures": [
-      {
-        "name": "es-ES",
-        "linguisticMetadata": {
-          "content": {
-            "Language": "es-ES",
-            "Variations": {}
-          }
-        }
+        "isActive": true
       }
     ]
   }

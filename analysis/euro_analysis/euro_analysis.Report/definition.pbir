@@ -1,4 +1,8 @@
 {
-  "name": "euro_analysis",
-  "displayName": "Euro 2024 Analysis"
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../euro_analysis.SemanticModel"
+    }
+  }
 }

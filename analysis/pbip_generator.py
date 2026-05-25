@@ -48,9 +48,7 @@ def generate_pbip_project(db_config: dict, output_dir: str = ".", project_name: 
 
     # Write definition.pbism (semantic model pointer)
     definition_pbism = {
-        "name": project_name,
-        "compatibilityLevel": 1550,
-        "model": "model.bim"
+        "version": "4.0"
     }
     definition_pbism_path = semantic_model_dir / "definition.pbism"
     with open(definition_pbism_path, "w", encoding="utf-8") as f:
@@ -58,8 +56,12 @@ def generate_pbip_project(db_config: dict, output_dir: str = ".", project_name: 
 
     # Write definition.pbir (report pointer)
     definition_pbir = {
-        "name": project_name,
-        "displayName": "Euro 2024 Analysis"
+        "version": "4.0",
+        "datasetReference": {
+            "byPath": {
+                "path": f"../{project_name}.SemanticModel"
+            }
+        }
     }
     definition_pbir_path = report_dir / "definition.pbir"
     with open(definition_pbir_path, "w", encoding="utf-8") as f:
@@ -74,9 +76,13 @@ def generate_pbip_project(db_config: dict, output_dir: str = ".", project_name: 
     # Write main .pbip file
     pbip_content = {
         "version": "1.0",
-        "name": project_name,
-        "datasetFolder": f"{project_name}.SemanticModel",
-        "reportFolder": f"{project_name}.Report"
+        "artifacts": [
+            {
+                "report": {
+                    "path": f"{project_name}.Report"
+                }
+            }
+        ]
     }
     pbip_path = project_dir / f"{project_name}.pbip"
     with open(pbip_path, "w", encoding="utf-8") as f:
@@ -113,18 +119,7 @@ def generate_tom_model(db_config: dict) -> dict:
             "defaultPowerBIDataSourceVersion": "powerBI_V3",
             "sourceQueryCulture": "es-ES",
             "tables": generate_tables(odbc_connection),
-            "relationships": generate_relationships(),
-            "cultures": [
-                {
-                    "name": "es-ES",
-                    "linguisticMetadata": {
-                        "content": {
-                            "Language": "es-ES",
-                            "Variations": {}
-                        }
-                    }
-                }
-            ]
+            "relationships": generate_relationships()
         }
     }
 
@@ -270,7 +265,6 @@ def generate_table_definition(
     table_def = {
         "name": table_name,
         "description": description,
-        "lineageTag": f"lineage-{table_name}",
         "partitions": [
             {
                 "name": f"Partition",
@@ -284,8 +278,7 @@ def generate_table_definition(
         "columns": [
             {
                 "name": col,
-                "dataType": "string",
-                "lineageTag": f"lineage-{table_name}-{col}"
+                "dataType": "string"
             }
             for col in columns
         ]
@@ -305,56 +298,47 @@ def generate_dax_measures() -> list:
         {
             "name": "Total Partidos",
             "expression": "COUNTROWS(fct_matches)",
-            "formatString": "#,0",
-            "lineageTag": "measure-total-matches"
+            "formatString": "#,0"
         },
         {
             "name": "Total Goles",
             "expression": "SUM(fct_matches[total_goals])",
-            "formatString": "#,0",
-            "lineageTag": "measure-total-goals"
+            "formatString": "#,0"
         },
         {
             "name": "Media Goles/Partido",
             "expression": "AVERAGE(fct_matches[total_goals])",
-            "formatString": "0.00",
-            "lineageTag": "measure-avg-goals"
+            "formatString": "0.00"
         },
         {
             "name": "Victorias Local",
             "expression": 'CALCULATE(COUNTROWS(fct_matches), fct_matches[result]="home_win")',
-            "formatString": "#,0",
-            "lineageTag": "measure-home-wins"
+            "formatString": "#,0"
         },
         {
             "name": "Victorias Visitante",
             "expression": 'CALCULATE(COUNTROWS(fct_matches), fct_matches[result]="away_win")',
-            "formatString": "#,0",
-            "lineageTag": "measure-away-wins"
+            "formatString": "#,0"
         },
         {
             "name": "Empates",
             "expression": 'CALCULATE(COUNTROWS(fct_matches), fct_matches[result]="draw")',
-            "formatString": "#,0",
-            "lineageTag": "measure-draws"
+            "formatString": "#,0"
         },
         {
             "name": "% Victoria Local",
             "expression": "DIVIDE([Victorias Local], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-home-win-pct"
+            "formatString": "0.0%"
         },
         {
             "name": "% Victoria Visitante",
             "expression": "DIVIDE([Victorias Visitante], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-away-win-pct"
+            "formatString": "0.0%"
         },
         {
             "name": "% Empate",
             "expression": "DIVIDE([Empates], [Total Partidos], 0)",
-            "formatString": "0.0%",
-            "lineageTag": "measure-draw-pct"
+            "formatString": "0.0%"
         }
     ]
 
@@ -371,10 +355,7 @@ def generate_relationships() -> list:
             "fromColumn": "tournament_id",
             "toTable": "dim_tournaments",
             "toColumn": "tournament_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
-            "isActive": True,
-            "lineageTag": "rel-fct-tournament"
+            "isActive": True
         },
         {
             "name": "rel_fct_group",
@@ -382,10 +363,7 @@ def generate_relationships() -> list:
             "fromColumn": "group_id",
             "toTable": "dim_groups",
             "toColumn": "group_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
-            "isActive": True,
-            "lineageTag": "rel-fct-group"
+            "isActive": True
         },
         {
             "name": "rel_fct_stadium",
@@ -393,10 +371,7 @@ def generate_relationships() -> list:
             "fromColumn": "stadium_id",
             "toTable": "dim_stadiums",
             "toColumn": "stadium_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
-            "isActive": True,
-            "lineageTag": "rel-fct-stadium"
+            "isActive": True
         },
         {
             "name": "rel_fct_home_team",
@@ -404,11 +379,8 @@ def generate_relationships() -> list:
             "fromColumn": "home_team_id",
             "toTable": "dim_teams",
             "toColumn": "team_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
             "isActive": True,
-            "crossFilteringBehavior": "bothDirections",
-            "lineageTag": "rel-fct-home-team"
+            "crossFilteringBehavior": "bothDirections"
         },
         {
             "name": "rel_fct_away_team",
@@ -416,11 +388,8 @@ def generate_relationships() -> list:
             "fromColumn": "away_team_id",
             "toTable": "dim_teams",
             "toColumn": "team_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
             "isActive": False,
-            "crossFilteringBehavior": "bothDirections",
-            "lineageTag": "rel-fct-away-team"
+            "crossFilteringBehavior": "bothDirections"
         },
         {
             "name": "rel_fct_date",
@@ -428,10 +397,7 @@ def generate_relationships() -> list:
             "fromColumn": "date_id",
             "toTable": "dim_date",
             "toColumn": "date_id",
-            "fromCardinality": "many",
-            "toCardinality": "one",
-            "isActive": True,
-            "lineageTag": "rel-fct-date"
+            "isActive": True
         }
     ]
 
@@ -439,29 +405,43 @@ def generate_relationships() -> list:
 
 
 def generate_report_json() -> dict:
-    """Generates a minimal report.json structure"""
+    """Generates a minimal report.json structure.
+    config and filters must be JSON-serialized strings, not objects."""
 
-    report = {
-        "version": "1.0",
-        "config": {
-            "hasCustomConnectivityActions": False,
-            "inactiveArtifacts": [],
-            "queries": [],
-            "queryGroups": [],
-            "report": [
-                {
-                    "displayName": "Euro 2024 Analysis",
-                    "height": 720,
-                    "width": 1280,
-                    "tabOrder": 0,
-                    "visualContainers": []
-                }
-            ],
-            "spelling": {}
-        }
+    report_config = json.dumps({
+        "version": "5.48",
+        "themeCollection": {
+            "baseTheme": {"name": "CY24SU06", "version": "5.48", "type": 2}
+        },
+        "activeSectionIndex": 0,
+        "defaultDrillFilterOtherVisuals": True,
+        "allowChangeFilterTypes": True,
+        "outspacePane": {"currentSectionIndex": 0, "expanded": False},
+        "optionsPane": {"expanded": False},
+        "isStickyChangeFilterValues": True,
+        "reportWideDoubleClickInteractionType": 0
+    }, ensure_ascii=False, separators=(',', ':'))
+
+    section_config = json.dumps(
+        {"relationships": [], "objects": {}},
+        ensure_ascii=False, separators=(',', ':')
+    )
+
+    return {
+        "version": "5.48",
+        "config": report_config,
+        "sections": [
+            {
+                "name": "ReportSection",
+                "displayName": "Euro 2024 Analysis",
+                "filters": "[]",
+                "ordinal": 0,
+                "visualContainers": [],
+                "config": section_config
+            }
+        ],
+        "filters": "[]"
     }
-
-    return report
 
 
 if __name__ == "__main__":
