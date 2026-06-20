@@ -8,7 +8,7 @@ sources:
       - name: euro_matches_raw
         description: "CSV de partidos importado en Postgres origen vía postgres_fdw. Contiene Euro 2021 y Euro 2024."
         meta:
-          owner: "data-engineering@civica-soft.com"
+          owner: "data-engineering@ugr.com"
           steward: "Carlos Perales"
           source_system: "Postgres origen (DB test, schema staging, tabla euro_matches)"
           source_format: "CSV (kaggle/euros)"
@@ -34,7 +34,7 @@ sources:
       - name: population
         description: "CSV externo (file_fdw) con población por país y año (Banco Mundial)."
         meta:
-          owner: "data-analytics@civica-soft.com"
+          owner: "data-analytics@ugr.com"
           steward: "Carlos Perales"
           source_system: "Banco Mundial - World Development Indicators"
           source_format: "CSV (population.csv)"

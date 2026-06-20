@@ -8,7 +8,7 @@ sources:
       - name: eurocup
         description: "Documentos de torneos volcados desde la colección eurocup.eurocup. Un documento por torneo (Euro 2021, Euro 2024)."
         meta:
-          owner: "data-engineering@civica-soft.com"
+          owner: "data-engineering@ugr.com"
           steward: "Carlos Perales"
           source_system: "MongoDB localhost:27017 (db=eurocup, collection=eurocup)"
           source_format: "JSON (documentos BSON cargados desde Compass)"
