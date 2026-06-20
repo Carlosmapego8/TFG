@@ -1,0 +1,152 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1939.174504845284,
+        "y": 40.362097109061622
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1938.4481707939813,
+            "y": 276.205776435763
+          },
+          "nodeIndex": "gold dim_date",
+          "nodeLineageTag": "cd5725b8-6bb4-402c-a91f-400946c8799f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1995.97195923758,
+            "y": 65.215653319284229
+          },
+          "nodeIndex": "gold dim_groups",
+          "nodeLineageTag": "aea0167b-5919-4cee-a8fd-97d7f3876721",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2559.1431309085897,
+            "y": 70.821500139987336
+          },
+          "nodeIndex": "gold dim_stadiums",
+          "nodeLineageTag": "f243c6e6-35aa-4de2-b8ec-c52fff05ed03",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2605.4552257107821,
+            "y": 404.74214045475685
+          },
+          "nodeIndex": "gold dim_teams",
+          "nodeLineageTag": "924f82db-1c2b-4ee3-b735-a640435e6965",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2331.1128823687632,
+            "y": 465.80597932302533
+          },
+          "nodeIndex": "gold dim_tournaments",
+          "nodeLineageTag": "9ff69ddf-c85b-4a23-9a73-0ea6edef08b5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2230.5517904685366,
+            "y": 179.90496950045181
+          },
+          "nodeIndex": "gold fct_matches",
+          "nodeLineageTag": "0c46035f-8d4d-434a-8c1e-3b0b53ef3f56",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3642.4481707939813,
+            "y": 238.20577643576303
+          },
+          "nodeIndex": "gold kpi_group_standings",
+          "nodeLineageTag": "e34cd4c8-34b4-4efe-853e-cc9c6352b32e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3926.4481707939813,
+            "y": 252.20577643576303
+          },
+          "nodeIndex": "gold kpi_stadium_stats",
+          "nodeLineageTag": "8a6b30b7-c227-430b-a83d-51525f9199c3",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4210.4481707939813,
+            "y": 238.20577643576303
+          },
+          "nodeIndex": "gold kpi_team_stats",
+          "nodeLineageTag": "ff73f594-1267-4f8f-a46b-ed1b4e6f8528",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4494.4481707939813,
+            "y": 238.20577643576303
+          },
+          "nodeIndex": "gold kpi_tournament_summary",
+          "nodeLineageTag": "997300bf-34ca-454e-a44d-dd224cf9446e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 89.19259052056961,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

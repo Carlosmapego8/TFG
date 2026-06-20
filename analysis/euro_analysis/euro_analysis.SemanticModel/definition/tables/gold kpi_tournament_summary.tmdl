@@ -1,0 +1,125 @@
+table 'gold kpi_tournament_summary'
+	lineageTag: 997300bf-34ca-454e-a44d-dd224cf9446e
+
+	column tournament_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 071bb59a-7dd0-49d9-90a8-345da1416151
+		summarizeBy: none
+		sourceColumn: tournament_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_matches
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1dde140a-b3fc-4098-8d1e-0f610b1e49a3
+		summarizeBy: sum
+		sourceColumn: total_matches
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_goals
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8a5a1296-7d18-4895-a366-056d7817488a
+		summarizeBy: sum
+		sourceColumn: total_goals
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_goals_per_match
+		dataType: double
+		sourceProviderType: decimal
+		lineageTag: 12e3a081-cb80-46c3-b365-3a0d9ad3aa05
+		summarizeBy: sum
+		sourceColumn: avg_goals_per_match
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column max_goals_in_match
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: d49f75dd-0f93-4e4e-9d13-21b4b0887b0a
+		summarizeBy: sum
+		sourceColumn: max_goals_in_match
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_home_wins
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e903ea43-57b3-4823-822a-4cb45c4a090e
+		summarizeBy: sum
+		sourceColumn: total_home_wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_away_wins
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d5a38ec5-0238-4876-9138-fe74fa40650c
+		summarizeBy: sum
+		sourceColumn: total_away_wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_draws
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 79fbb37a-a0a4-454c-b9cb-efccf8a75fc0
+		summarizeBy: sum
+		sourceColumn: total_draws
+
+		annotation SummarizationSetBy = Automatic
+
+	column home_win_pct
+		dataType: double
+		sourceProviderType: decimal
+		lineageTag: 8fea36e7-30dd-4743-a863-4b838e90de88
+		summarizeBy: sum
+		sourceColumn: home_win_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column away_win_pct
+		dataType: double
+		sourceProviderType: decimal
+		lineageTag: 23481035-d47a-497e-9823-8c4a18d6cd89
+		summarizeBy: sum
+		sourceColumn: away_win_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column draw_pct
+		dataType: double
+		sourceProviderType: decimal
+		lineageTag: ed19308d-4f79-4f1d-8e7d-1db244d721c1
+		summarizeBy: sum
+		sourceColumn: draw_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'gold kpi_tournament_summary' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_kpi_tournament_summary = Origen{[Schema="gold",Item="kpi_tournament_summary"]}[Data]
+				in
+				    gold_kpi_tournament_summary
+

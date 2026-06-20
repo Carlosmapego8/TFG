@@ -3,24 +3,29 @@ database:
   config_file: "db_config.py"
 
 ingestions:
-  - type: csv
-    path: "data/test.csv"
-    schema_name: "raw"
-    table_name: "clientes_ext"
-
   - type: csv_external
-    path: "data/test.csv"
-    schema_name: external_2
-    table_name: clientes_ext_4
-
-  - type: postgres
-    source_schema: "test"
-    source_table: "test"
+    path: "data/population.csv"
     schema_name: "raw"
-    table_name: "orders_ext"
-    source_db_config: "db_config.py"
+    table_name: "population"
 
-transformations: []
+  - type: postgres_external
+    source_schema: "staging"
+    source_table: "euro_matches"
+    schema_name: "raw"
+    table_name: "euro_matches_raw"
+    source_db_config: "db_origin_config.py"
+
+  - type: mongo
+    mongo_database: "eurocup"
+    mongo_collection: "eurocup"
+    schema_name: "raw"
+    table_name: "eurocup"
+    source_db_config: "mongo_config.py"
+
+transformations:
+  - type: dbt
+    project_dir: "../transformation/tfg_dbt_project"
+    command: build
 
 # Analytics component - generates Power BI PBIP project
 analytics:

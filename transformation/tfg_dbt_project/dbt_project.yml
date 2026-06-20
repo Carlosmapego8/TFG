@@ -32,11 +32,25 @@ data_tests:
 # files using the `{{ config(...) }}` macro.
 models:
   tfg_dbt_project:
-  
-    # Config indicated by + and applies to all files under models/example/
+    bronze:
+      +materialized: view
+      +schema: bronze
     silver:
       +materialized: view
       +schema: silver
     gold:
       +materialized: view
       +schema: gold
+
+  elementary:
+    +schema: elementary
+
+seeds:
+  tfg_dbt_project:
+    +schema: seed
+
+vars:
+  # Elementary - observability package
+  # https://docs.elementary-data.com/
+  elementary:
+    enable_elementary: true

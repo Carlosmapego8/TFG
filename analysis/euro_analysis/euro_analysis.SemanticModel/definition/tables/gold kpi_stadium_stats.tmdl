@@ -1,0 +1,91 @@
+table 'gold kpi_stadium_stats'
+	lineageTag: 8a6b30b7-c227-430b-a83d-51525f9199c3
+
+	column stadium_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ad4f75d4-977e-4656-b2c2-a9bcec1077cd
+		summarizeBy: none
+		sourceColumn: stadium_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stadium_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: ee50c578-47a1-4af2-a7e9-710a84557c9d
+		summarizeBy: none
+		sourceColumn: stadium_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column matches_hosted
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4628c582-14b0-4d5b-9466-e50529d51c9c
+		summarizeBy: sum
+		sourceColumn: matches_hosted
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_goals
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e4b4d57e-a49d-4432-93b9-4adeec20ce8b
+		summarizeBy: sum
+		sourceColumn: total_goals
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_goals_per_match
+		dataType: double
+		sourceProviderType: decimal
+		lineageTag: b9060938-4e64-4ca1-8336-5fc772ceeb17
+		summarizeBy: sum
+		sourceColumn: avg_goals_per_match
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column home_wins
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 96d42b8a-9689-48fd-8116-e5d54d019e0a
+		summarizeBy: sum
+		sourceColumn: home_wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column away_wins
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: cda8b4f2-1e12-49a5-bf91-259a9b5678ee
+		summarizeBy: sum
+		sourceColumn: away_wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column draws
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: af8aef29-7ea0-43f0-ae15-9501ac189b5d
+		summarizeBy: sum
+		sourceColumn: draws
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold kpi_stadium_stats' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_kpi_stadium_stats = Origen{[Schema="gold",Item="kpi_stadium_stats"]}[Data]
+				in
+				    gold_kpi_stadium_stats
+

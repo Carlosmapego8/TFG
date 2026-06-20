@@ -1,16 +1,10 @@
-with source as (
-    select data
-    from {{ source('bronze_json', 'euro_groups_json') }}
-),
-
-groups_flat as (
-    select
-        jsonb_array_elements(data->'groups') as group_data
-    from source
+with grp as (
+    select distinct group_name
+    from {{ ref('all_matches') }}
+    where group_name is not null
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(["group_data->>'name'"]) }} as group_id,
-    group_data->>'name' as group_name
-from groups_flat
-group by 1,2
+    {{ dbt_utils.generate_surrogate_key(['group_name']) }} as group_id,
+    group_name
+from grp

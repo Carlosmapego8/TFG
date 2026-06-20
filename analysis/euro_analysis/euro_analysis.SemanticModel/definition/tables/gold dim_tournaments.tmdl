@@ -1,0 +1,40 @@
+table 'gold dim_tournaments'
+	lineageTag: 9ff69ddf-c85b-4a23-9a73-0ea6edef08b5
+
+	column tournament_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 1de00c83-5189-4af3-a8c5-26837c9b5aa1
+		summarizeBy: none
+		sourceColumn: tournament_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tournament_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 0d83ce1c-9962-4e20-a108-90806152cb8e
+		summarizeBy: none
+		sourceColumn: tournament_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e9aad738-58e0-44c6-b623-ca9784b13d8f
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold dim_tournaments' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_dim_tournaments = Origen{[Schema="gold",Item="dim_tournaments"]}[Data]
+				in
+				    gold_dim_tournaments
+

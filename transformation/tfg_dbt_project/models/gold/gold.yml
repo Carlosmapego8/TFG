@@ -7,7 +7,7 @@ models:
   # ========================
 
   - name: dim_teams
-    description: "Dimensión de equipos participantes en los torneos."
+    description: "Dimensión de equipos participantes en los torneos, con población media (2021 + 2024)."
     columns:
       - name: team_id
         description: "Clave surrogate única del equipo."
@@ -25,6 +25,9 @@ models:
         tests:
           - not_null
           - unique
+
+      - name: population_avg
+        description: "Población media (Banco Mundial) de 2021 y 2024. ENG/SCO/WAL se calcula sobre UK aplicando el share definido en la macro population_share."
 
 
   - name: dim_groups

@@ -1,10 +1,12 @@
-with source as (
-    select data
-    from {{ source('bronze_json', 'euro_groups_json') }}
+with tournaments as (
+    select distinct
+        tournament_name,
+        tournament_year
+    from {{ ref('all_matches') }}
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(["data->>'name'", "(data->>'year')::int"]) }} as tournament_id,
-    data->>'name' as tournament_name,
-    (data->>'year')::int as year
-from source
+    {{ dbt_utils.generate_surrogate_key(['tournament_name', 'tournament_year']) }} as tournament_id,
+    tournament_name,
+    tournament_year as year
+from tournaments

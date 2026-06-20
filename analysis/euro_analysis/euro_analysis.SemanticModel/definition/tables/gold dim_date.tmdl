@@ -1,0 +1,75 @@
+table 'gold dim_date'
+	lineageTag: cd5725b8-6bb4-402c-a91f-400946c8799f
+
+	column date_id
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 474fcb67-7a22-4887-bb99-c8a446b85341
+		summarizeBy: none
+		sourceColumn: date_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column full_date
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: e1760684-c4aa-485b-a853-412f8122dd5f
+		summarizeBy: none
+		sourceColumn: full_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: fd4d8d51-da01-42c5-a8a4-efc8a058cf9d
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: fa33805e-80f0-4e68-aacd-36eeaee06199
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 54a36aba-3593-432e-a030-6152e9b18d55
+		summarizeBy: none
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column weekday
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 377ba1d1-6bb7-4df5-8f2b-760aef3c5ad6
+		summarizeBy: none
+		sourceColumn: weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold dim_date' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_dim_date = Origen{[Schema="gold",Item="dim_date"]}[Data]
+				in
+				    gold_dim_date
+

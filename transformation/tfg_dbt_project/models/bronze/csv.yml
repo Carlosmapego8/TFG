@@ -2,24 +2,49 @@ version: 2
 
 sources:
   - name: bronze_csv
-    schema: staging
+    description: "Foreign tables (file_fdw + postgres_fdw) sobre los CSV / Postgres origen."
+    schema: raw
     tables:
-      - name: euro_matches
-        description: "Raw matches CSV imported to Postgres"
+      - name: euro_matches_raw
+        description: "CSV de partidos importado en Postgres origen vía postgres_fdw. Contiene Euro 2021 y Euro 2024."
+        meta:
+          owner: "data-engineering@civica-soft.com"
+          steward: "Carlos Perales"
+          source_system: "Postgres origen (DB test, schema staging, tabla euro_matches)"
+          source_format: "CSV (kaggle/euros)"
+          refresh_cadence: "Ad-hoc (carga manual al actualizar el dataset)"
         columns:
           - name: match_number
-            description: "Número de partido"
+            description: "Número de partido."
           - name: round_number
-            description: "Número de ronda"
-          - name: date
-            description: "Fecha y hora en formato DD/MM/YYYY HH24:MI"
+            description: "Número de ronda (1, 2, 3, ...)."
+          - name: match_date
+            description: "Fecha y hora en formato DD/MM/YYYY HH24:MI."
           - name: location
-            description: "Nombre del estadio"
+            description: "Nombre del estadio."
           - name: home_team
-            description: "Equipo local (texto)"
+            description: "Equipo local."
           - name: away_team
-            description: "Equipo visitante (texto)"
-          - name: group
-            description: "Nombre de grupo"
+            description: "Equipo visitante."
+          - name: group_name
+            description: "Nombre de grupo (Group A, Group B, ...)."
           - name: result
-            description: "Resultado en formato X - Y"
+            description: "Resultado en formato X - Y."
+
+      - name: population
+        description: "CSV externo (file_fdw) con población por país y año (Banco Mundial)."
+        meta:
+          owner: "data-analytics@civica-soft.com"
+          steward: "Carlos Perales"
+          source_system: "Banco Mundial - World Development Indicators"
+          source_format: "CSV (population.csv)"
+          refresh_cadence: "Anual (publicación del Banco Mundial)"
+        columns:
+          - name: Country Name
+            description: "Nombre del país (puede diferir del team_name; UK no se desglosa)."
+          - name: Country Code
+            description: "Código ISO de 3 letras (GBR, ESP, FRA, ...). Match con team_code salvo casos UK."
+          - name: Year
+            description: "Año (text)."
+          - name: Value
+            description: "Población (text, casteable a bigint)."

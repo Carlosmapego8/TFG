@@ -1,9 +1,10 @@
-with source as (
+with locations as (
     select distinct location
-    from {{ source('bronze_csv', 'euro_matches') }}
+    from {{ ref('all_matches') }}
+    where location is not null
 )
 
 select
     {{ dbt_utils.generate_surrogate_key(['location']) }} as stadium_id,
     location as stadium_name
-from source
+from locations

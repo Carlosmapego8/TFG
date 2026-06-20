@@ -1,0 +1,49 @@
+table 'gold dim_teams'
+	lineageTag: 924f82db-1c2b-4ee3-b735-a640435e6965
+
+	column team_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: e78c223e-1978-4d85-b270-11115b8e080b
+		summarizeBy: none
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b37d7a72-a86c-46ed-a9a3-ed8fbafba852
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_code
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b343f3df-a687-4ef7-a472-a46d122e8321
+		summarizeBy: none
+		sourceColumn: team_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column population_avg
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a2938c31-6a4b-4b2f-a57e-5b577c746226
+		summarizeBy: none
+		sourceColumn: population_avg
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold dim_teams' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_dim_teams = Origen{[Schema="gold",Item="dim_teams"]}[Data]
+				in
+				    gold_dim_teams
+

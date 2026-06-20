@@ -1,0 +1,146 @@
+table 'gold fct_matches'
+	lineageTag: 0c46035f-8d4d-434a-8c1e-3b0b53ef3f56
+
+	column match_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 73c3e7ac-9cf7-45cb-af9f-88aea0af708a
+		summarizeBy: none
+		sourceColumn: match_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tournament_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 3a0c1755-db68-49ed-bd11-fdacfe93227d
+		summarizeBy: none
+		sourceColumn: tournament_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column group_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 78219b2b-8f1a-4d47-a924-2a667aac65f8
+		summarizeBy: none
+		sourceColumn: group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stadium_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: f86464cf-2b96-4b69-a9d7-37a879566b7e
+		summarizeBy: none
+		sourceColumn: stadium_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column home_team_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 9d37663f-4cdd-42d3-8e1b-e381c6766278
+		summarizeBy: none
+		sourceColumn: home_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column away_team_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: b068e3cc-cea8-477f-95bd-d5099973ed3f
+		summarizeBy: none
+		sourceColumn: away_team_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_id
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 521f5a24-d096-4172-866d-bafa15d94f33
+		summarizeBy: none
+		sourceColumn: date_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column match_number
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6d577fc5-9c62-45d3-8c2a-e47f41595282
+		summarizeBy: sum
+		sourceColumn: match_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column round_number
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: c1289e53-18ed-4b0e-8140-6730e8a6f734
+		summarizeBy: none
+		sourceColumn: round_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column match_hour
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: afcad778-e6da-40e0-afdb-23164d8c60b8
+		summarizeBy: sum
+		sourceColumn: match_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column home_goals
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 73f2f9ed-8523-4e42-b6f7-a955ac13a5ea
+		summarizeBy: sum
+		sourceColumn: home_goals
+
+		annotation SummarizationSetBy = Automatic
+
+	column away_goals
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 23067d1f-c71b-448f-b55e-6accd94ddec7
+		summarizeBy: sum
+		sourceColumn: away_goals
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_goals
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 325291e5-74c8-4000-9415-7e35a4f0b94a
+		summarizeBy: sum
+		sourceColumn: total_goals
+
+		annotation SummarizationSetBy = Automatic
+
+	column result
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: c2da03ab-f53f-4bf3-a9eb-84a039183642
+		summarizeBy: none
+		sourceColumn: result
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold fct_matches' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_fct_matches = Origen{[Schema="gold",Item="fct_matches"]}[Data]
+				in
+				    gold_fct_matches
+

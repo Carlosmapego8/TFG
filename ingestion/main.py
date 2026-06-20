@@ -13,6 +13,8 @@ from postgre_ingestor import PostgresIngestion
 from CSV_External_Ingestion import CSVExternalIngestion
 from Postgre_External_Ingestion import PostgresExternalIngestion
 from Mongo_External_Ingestion import MongoExternalIngestion
+from Mongo_Ingestor import MongoIngestion
+from DbtTransformation import DbtTransformation
 
 # Import Analytics from analysis module
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -96,12 +98,40 @@ def main():
                         source_db_config_path=ing["source_db_config"]
                     )
                 )
+            elif ing_type == "mongo":
+                ingestions.append(
+                    MongoIngestion(
+                        mongo_database=ing["mongo_database"],
+                        mongo_collection=ing["mongo_collection"],
+                        schema_name=ing["schema_name"],
+                        table_name=ing.get("table_name"),
+                        db_target=db_target,
+                        source_db_config_path=ing["source_db_config"]
+                    )
+                )
             else:
                 raise ValueError(f"Tipo de ingesta no soportado: {ing_type}")
 
         if not ingestions:
             print("[WARN] No hay ingestas definidas")
             return
+
+        # Crear transformaciones según tipo
+        transformations = []
+        for tr in config.get("transformations", []) or []:
+            tr_type = tr.get("type")
+            if tr_type == "dbt":
+                transformations.append(
+                    DbtTransformation(
+                        project_dir=tr["project_dir"],
+                        dbt_executable=tr.get("dbt_executable"),
+                        command=tr.get("command", "build"),
+                        target=tr.get("target"),
+                        select=tr.get("select"),
+                    )
+                )
+            else:
+                raise ValueError(f"Tipo de transformación no soportado: {tr_type}")
 
         # Crear componente Analytics si está configurado
         analytics_instance = None
@@ -125,7 +155,7 @@ def main():
         # Orchestrator
         orchestrator = Orchestrator(
             ingestions=ingestions,
-            transformations=config.get("transformations", []),
+            transformations=transformations,
             analytics=analytics_instance
         )
 

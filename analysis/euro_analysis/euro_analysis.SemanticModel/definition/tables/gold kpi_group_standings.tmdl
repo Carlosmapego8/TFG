@@ -1,0 +1,119 @@
+table 'gold kpi_group_standings'
+	lineageTag: e34cd4c8-34b4-4efe-853e-cc9c6352b32e
+
+	column group_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: a59594e9-d0df-4328-993e-b13628951d90
+		summarizeBy: none
+		sourceColumn: group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 77ce9431-4e17-4706-988c-1c12981b13ad
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_code
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 8f17e8a2-c242-497d-9286-362e712a474e
+		summarizeBy: none
+		sourceColumn: team_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column matches_played
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1d05538e-0d32-4165-aef7-84f189acfe74
+		summarizeBy: sum
+		sourceColumn: matches_played
+
+		annotation SummarizationSetBy = Automatic
+
+	column wins
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1b32a4b3-a77d-4721-b785-dfaf81a699a0
+		summarizeBy: sum
+		sourceColumn: wins
+
+		annotation SummarizationSetBy = Automatic
+
+	column draws
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e43cc495-f68b-4c27-abb4-1c24edccb1d8
+		summarizeBy: sum
+		sourceColumn: draws
+
+		annotation SummarizationSetBy = Automatic
+
+	column losses
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 79855e88-1eb7-4b26-a8e7-ff521106accf
+		summarizeBy: sum
+		sourceColumn: losses
+
+		annotation SummarizationSetBy = Automatic
+
+	column goals_for
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: ff9a3838-b0f7-4286-b6fb-096eca19389e
+		summarizeBy: sum
+		sourceColumn: goals_for
+
+		annotation SummarizationSetBy = Automatic
+
+	column goals_against
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 61de9142-7cad-4ce5-8e37-ef27499f90ee
+		summarizeBy: sum
+		sourceColumn: goals_against
+
+		annotation SummarizationSetBy = Automatic
+
+	column goal_difference
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a325c8cb-64ef-4231-98a3-4a563b0cc817
+		summarizeBy: sum
+		sourceColumn: goal_difference
+
+		annotation SummarizationSetBy = Automatic
+
+	column points
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7fedd209-7c9b-415b-8c9c-e5ebf2ade7e4
+		summarizeBy: sum
+		sourceColumn: points
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold kpi_group_standings' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_kpi_group_standings = Origen{[Schema="gold",Item="kpi_group_standings"]}[Data]
+				in
+				    gold_kpi_group_standings
+

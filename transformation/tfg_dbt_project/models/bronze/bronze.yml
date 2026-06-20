@@ -1,0 +1,183 @@
+version: 2
+
+models:
+
+  - name: matches_csv
+    description: |
+      Matches del CSV (foreign table sobre el Postgres origen) filtrados a Euro 2021
+      y conformados al esquema bronze unificado que comparten matches_csv y matches_mongo.
+      Normaliza variantes de nombre (Türkiye → Turkey, Czechia → Czech Republic) y los
+      labels de ronda numéricos (1/2/3 → Matchday 1/2/3). El group_name se pone a NULL
+      cuando el partido no es de fase de grupos (Round of 16, Quarter Finals, etc).
+    columns:
+      - name: tournament_name
+        description: "Nombre del torneo (constante 'Euro 2021' para este modelo)."
+        tests:
+          - not_null
+      - name: tournament_year
+        description: "Año del torneo (constante 2021 para este modelo)."
+        tests:
+          - not_null
+      - name: match_number
+        description: "Número de partido dentro del torneo (1..51), tomado del CSV origen."
+        tests:
+          - not_null
+      - name: round_number
+        description: "Etiqueta de ronda normalizada: 'Matchday 1/2/3' para fase de grupos o el label de eliminatoria (Round of 16, Quarter Finals, Semi Finals, Final)."
+        tests:
+          - not_null
+      - name: match_date
+        description: "Timestamp del partido, parseado desde el texto 'DD/MM/YYYY HH24:MI' del CSV."
+        tests:
+          - not_null
+      - name: location
+        description: "Nombre del estadio donde se disputó el partido."
+        tests:
+          - not_null
+      - name: home_team
+        description: "Equipo local con nombre canónico (Türkiye → Turkey, Czechia → Czech Republic)."
+        tests:
+          - not_null
+      - name: away_team
+        description: "Equipo visitante con nombre canónico."
+        tests:
+          - not_null
+      - name: group_name
+        description: "Nombre del grupo (Group A..F) en fase de grupos; NULL en eliminatorias."
+      - name: home_goals
+        description: "Goles del equipo local, extraídos del campo 'result' del CSV ('X - Y')."
+        tests:
+          - not_null
+      - name: away_goals
+        description: "Goles del equipo visitante, extraídos del campo 'result' del CSV ('X - Y')."
+        tests:
+          - not_null
+
+  - name: matches_mongo
+    description: |
+      Matches del documento Mongo (raw.eurocup) filtrados al torneo 'Euro 2024',
+      desanidando el array matches[] y conformados al mismo esquema que matches_csv.
+      tournament_year se deriva del nombre del torneo vía regex. match_number es la
+      posición del partido dentro del array (1..51). match_date combina los campos
+      date y time del documento.
+    columns:
+      - name: tournament_name
+        description: "Nombre del torneo tal cual aparece en raw.eurocup.name (constante 'Euro 2024' para este modelo)."
+        tests:
+          - not_null
+      - name: tournament_year
+        description: "Año extraído del nombre del torneo con regex (constante 2024 para este modelo)."
+        tests:
+          - not_null
+      - name: match_number
+        description: "Posición ordinal del partido dentro del array matches[] del documento (1..51)."
+        tests:
+          - not_null
+      - name: round_number
+        description: "Etiqueta de ronda (Matchday 1/2/3 en grupos, Round of 16, Quarter-finals, Semi-final/Semi-finals, Final) tomada de match.round."
+        tests:
+          - not_null
+      - name: match_date
+        description: "Timestamp del partido, combinando match.date (DATE) + match.time (TIME)."
+        tests:
+          - not_null
+      - name: location
+        description: "Estadio del partido, tomado de match.ground."
+        tests:
+          - not_null
+      - name: home_team
+        description: "Equipo local (match.team1)."
+        tests:
+          - not_null
+      - name: away_team
+        description: "Equipo visitante (match.team2)."
+        tests:
+          - not_null
+      - name: group_name
+        description: "Grupo del partido (match.group) en fase de grupos; NULL en eliminatorias."
+      - name: home_goals
+        description: "Goles del equipo local: match.score.ft[0]."
+        tests:
+          - not_null
+      - name: away_goals
+        description: "Goles del equipo visitante: match.score.ft[1]."
+        tests:
+          - not_null
+
+  - name: all_matches
+    description: |
+      Unión de matches_csv (Euro 2021) y matches_mongo (Euro 2024). Es la fuente
+      canónica para todos los modelos silver: tournament, groups, teams, stadiums,
+      re_teams_groups y matches derivan de aquí, evitando duplicar el UNION en cada
+      uno y garantizando coherencia.
+    columns:
+      - name: tournament_name
+        description: "Nombre del torneo (Euro 2021 o Euro 2024)."
+        tests:
+          - not_null
+      - name: tournament_year
+        description: "Año del torneo."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2021, 2024]
+      - name: match_number
+        description: "Número de partido dentro del torneo (no único entre torneos)."
+        tests:
+          - not_null
+      - name: round_number
+        description: "Etiqueta de ronda."
+        tests:
+          - not_null
+      - name: match_date
+        description: "Timestamp del partido."
+        tests:
+          - not_null
+      - name: location
+        description: "Estadio del partido."
+        tests:
+          - not_null
+      - name: home_team
+        description: "Equipo local (nombre canónico)."
+        tests:
+          - not_null
+      - name: away_team
+        description: "Equipo visitante (nombre canónico)."
+        tests:
+          - not_null
+      - name: group_name
+        description: "Grupo (Group A..F) en fase de grupos; NULL en eliminatorias."
+      - name: home_goals
+        description: "Goles del equipo local."
+        tests:
+          - not_null
+      - name: away_goals
+        description: "Goles del equipo visitante."
+        tests:
+          - not_null
+
+  - name: population
+    description: |
+      CSV de población del Banco Mundial (file_fdw sobre raw.population) filtrado a
+      los años 2021 y 2024 y con tipos casteados (Year → int, Value → bigint). Solo
+      conserva filas con valor no nulo. Es el insumo de silver.teams para añadir
+      population_avg como atributo del equipo.
+    columns:
+      - name: country_name
+        description: "Nombre del país tal y como aparece en el CSV del Banco Mundial (p.ej. 'Czechia', 'Russian Federation')."
+        tests:
+          - not_null
+      - name: country_code
+        description: "Código ISO-3 oficial del Banco Mundial. Se cruza con team_code (UEFA) en silver.teams mediante la macro population_country_code."
+        tests:
+          - not_null
+      - name: year
+        description: "Año de la observación (2021 o 2024)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2021, 2024]
+      - name: population
+        description: "Población total del país en ese año (bigint)."
+        tests:
+          - not_null

@@ -1,11 +1,22 @@
 version: 2
 
 sources:
-  - name: bronze_json
-    schema: staging
+  - name: bronze_mongo
+    description: "Tabla cargada por la ingesta directa de MongoDB (Mongo_Ingestor)."
+    schema: raw
     tables:
-      - name: euro_groups_json
-        description: "Raw JSON data for Euro tournaments"
+      - name: eurocup
+        description: "Documentos de torneos volcados desde la colección eurocup.eurocup. Un documento por torneo (Euro 2021, Euro 2024)."
+        meta:
+          owner: "data-engineering@civica-soft.com"
+          steward: "Carlos Perales"
+          source_system: "MongoDB localhost:27017 (db=eurocup, collection=eurocup)"
+          source_format: "JSON (documentos BSON cargados desde Compass)"
+          refresh_cadence: "Ad-hoc (carga manual desde JSON file)"
         columns:
-          - name: data
-            description: "Full tournament JSON"
+          - name: _id
+            description: "ObjectId del documento (text)."
+          - name: name
+            description: "Nombre del torneo (ej. Euro 2021, Euro 2024)."
+          - name: matches
+            description: "Array de partidos serializado como JSON (text). Cada elemento: {round, date, time, team1, team2, score:{ft,ht}, goals1, goals2, group, ground}."

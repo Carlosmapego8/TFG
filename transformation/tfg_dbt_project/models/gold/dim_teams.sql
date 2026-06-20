@@ -1,5 +1,6 @@
 select
     team_id,
     team_name,
-    team_code
+    team_code,
+    population_avg
 from {{ ref('teams') }}

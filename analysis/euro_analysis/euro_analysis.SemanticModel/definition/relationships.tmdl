@@ -1,0 +1,27 @@
+relationship a8536590-deec-94ef-ffe7-269679493eba
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'gold fct_matches'.away_team_id
+	toColumn: 'gold dim_teams'.team_id
+
+relationship e1d07b82-9972-a08b-9c65-6376dfeeea98
+	fromColumn: 'gold fct_matches'.group_id
+	toColumn: 'gold dim_groups'.group_id
+
+relationship 5ad4bd3f-9e08-068c-7a03-41e11291787a
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'gold fct_matches'.date_id
+	toColumn: 'gold dim_date'.date_id
+
+relationship a8631dfb-552a-fd5a-4635-a79aaa9860ae
+	fromColumn: 'gold fct_matches'.stadium_id
+	toColumn: 'gold dim_stadiums'.stadium_id
+
+relationship e5229c7c-97ce-6901-1a12-843066f25a64
+	fromColumn: 'gold fct_matches'.tournament_id
+	toColumn: 'gold dim_tournaments'.tournament_id
+
+relationship 6c9b7e3e-73e4-8590-eb56-c76b3b0e9458
+	isActive: false
+	fromColumn: 'gold fct_matches'.home_team_id
+	toColumn: 'gold dim_teams'.team_id
+

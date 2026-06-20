@@ -1,0 +1,30 @@
+table 'gold dim_stadiums'
+	lineageTag: f243c6e6-35aa-4de2-b8ec-c52fff05ed03
+
+	column stadium_id
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 36ef218a-b1ef-4ff0-8b2f-4c00e6176acd
+		summarizeBy: none
+		sourceColumn: stadium_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stadium_name
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 4864a3b1-f5ef-4eac-8ee1-d9e82d396c0f
+		summarizeBy: none
+		sourceColumn: stadium_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'gold dim_stadiums' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "eurocup_external"),
+				    gold_dim_stadiums = Origen{[Schema="gold",Item="dim_stadiums"]}[Data]
+				in
+				    gold_dim_stadiums
+

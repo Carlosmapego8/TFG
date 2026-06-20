@@ -1,0 +1,154 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "f67b576c06446d2986a2",
+  "position": {
+    "x": 551.63135060888794,
+    "y": 369.48882568061759,
+    "z": 3002,
+    "height": 240.91670052824054,
+    "width": 371.5278312869562,
+    "tabOrder": 3002
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold fct_matches"
+                    }
+                  },
+                  "Property": "result"
+                }
+              },
+              "queryRef": "gold fct_matches.result",
+              "nativeQueryRef": "result",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold dim_tournaments"
+                    }
+                  },
+                  "Property": "tournament_name"
+                }
+              },
+              "queryRef": "gold dim_tournaments.tournament_name",
+              "nativeQueryRef": "tournament_name"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "gold dim_date"
+                        }
+                      },
+                      "Property": "weekday"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "CountNonNull(gold dim_date.weekday)",
+              "nativeQueryRef": "weekday"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "gold dim_date"
+                      }
+                    },
+                    "Property": "weekday"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1071b96dceded02a20c5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold fct_matches"
+              }
+            },
+            "Property": "result"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f07d3fff48896110bc36",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "gold dim_date"
+                  }
+                },
+                "Property": "weekday"
+              }
+            },
+            "Function": 5
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fa5cbbefa403242012e5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold dim_tournaments"
+              }
+            },
+            "Property": "tournament_name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

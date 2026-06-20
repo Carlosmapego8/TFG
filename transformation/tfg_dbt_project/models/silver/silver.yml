@@ -33,7 +33,7 @@ models:
           - not_null
 
   - name: teams
-    description: "Dimensión de equipos con clave surrogate."
+    description: "Dimensión de equipos con clave surrogate y población media (2021 + 2024)."
     columns:
       - name: team_id
         description: "Clave surrogate única por equipo."
@@ -49,6 +49,8 @@ models:
         tests:
           - not_null
           - unique
+      - name: population_avg
+        description: "Población media (Banco Mundial) de 2021 y 2024. Para ENG/SCO/WAL se reparte la población de UK con un share aproximado vía la macro population_share."
 
   - name: re_teams_groups
     description: "Tabla puente que relaciona equipo, grupo y torneo."

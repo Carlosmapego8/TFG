@@ -2,6 +2,8 @@
 # Configuraciones Bases de Datos
 # ------------------------
 db_config.py
+mongo_config.py
+db_origin_config.py
 
 # ------------------------
 # Archivos caché python

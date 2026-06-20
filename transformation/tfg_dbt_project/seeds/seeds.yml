@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: team_codes
+    description: "Mapping de nombre canónico de equipo a código ISO/UEFA de 3 letras."
+    columns:
+      - name: team_name
+        tests:
+          - unique
+          - not_null
+      - name: team_code
+        tests:
+          - unique
+          - not_null

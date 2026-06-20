@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "euro_analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "955d7986-570d-4b53-9b3d-0d4683880cac"
+  }
+}

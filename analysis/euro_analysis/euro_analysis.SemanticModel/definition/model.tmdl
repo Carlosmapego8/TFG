@@ -1,0 +1,26 @@
+/// Euro 2024 Analysis - Football Tournament Analytics
+model euro_analysis
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["gold kpi_tournament_summary","gold dim_date","gold dim_groups","gold dim_stadiums","gold dim_tournaments","gold fct_matches","gold dim_teams","gold kpi_group_standings","gold kpi_stadium_stats","gold kpi_team_stats"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'gold kpi_tournament_summary'
+ref table 'gold dim_date'
+ref table 'gold dim_groups'
+ref table 'gold dim_stadiums'
+ref table 'gold dim_tournaments'
+ref table 'gold fct_matches'
+ref table 'gold dim_teams'
+ref table 'gold kpi_group_standings'
+ref table 'gold kpi_stadium_stats'
+ref table 'gold kpi_team_stats'
+

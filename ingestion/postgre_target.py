@@ -88,7 +88,7 @@ class PostgresTarget(DBTarget):
             reader = csv.reader(f)
             columns = next(reader)
 
-        columns_sql = ", ".join(f"{c} TEXT" for c in columns)
+        columns_sql = ", ".join(f'"{c}" TEXT' for c in columns)
 
         sql_statement = f"""
         CREATE EXTENSION IF NOT EXISTS file_fdw;
@@ -119,6 +119,7 @@ class PostgresTarget(DBTarget):
         table_name,
         source_schema,
         source_table,
+        columns,
         source_db_config_path
     ):
         """Tabla externa apuntando a otra PostgreSQL usando postgres_fdw"""
@@ -126,6 +127,8 @@ class PostgresTarget(DBTarget):
         cur = self.conn.cursor()
 
         DB_CONFIG = load_config(source_db_config_path, "DB_CONFIG")
+
+        columns_sql = ",\n            ".join(f'"{col}" {typ}' for col, typ in columns)
 
         sql_statement = f"""
         CREATE EXTENSION IF NOT EXISTS postgres_fdw;
@@ -146,7 +149,9 @@ class PostgresTarget(DBTarget):
             password '{DB_CONFIG['password']}'
         );
 
-        CREATE FOREIGN TABLE IF NOT EXISTS {schema_name}.{table_name}
+        CREATE FOREIGN TABLE IF NOT EXISTS {schema_name}.{table_name} (
+            {columns_sql}
+        )
         SERVER remote_pg
         OPTIONS (
             schema_name '{source_schema}',
