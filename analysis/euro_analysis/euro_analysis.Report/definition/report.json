@@ -2,13 +2,54 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
   "themeCollection": {
     "baseTheme": {
-      "name": "CY24SU06",
+      "name": "CY26SU05",
       "reportVersionAtImport": {
-        "visual": "1.8.84",
-        "report": "2.0.84",
-        "page": "1.3.84"
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Tidal",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
       },
       "type": "SharedResources"
     }
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU05",
+          "path": "BaseThemes/CY26SU05.json",
+          "type": "BaseTheme"
+        },
+        {
+          "name": "Tidal",
+          "path": "BuiltInThemes/Tidal.json",
+          "type": "CustomTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "UEFA-Euro-2024-Emblem29590423403416144.png",
+          "path": "UEFA-Euro-2024-Emblem29590423403416144.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useEnhancedTooltips": false
   }
 }

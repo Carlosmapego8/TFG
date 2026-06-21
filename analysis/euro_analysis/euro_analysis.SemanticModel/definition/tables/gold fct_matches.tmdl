@@ -135,6 +135,15 @@ table 'gold fct_matches'
 
 		annotation SummarizationSetBy = Automatic
 
+	column data_origin
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 424886e5-639b-4b35-96bb-0ac85807b0c1
+		summarizeBy: none
+		sourceColumn: data_origin
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'gold fct_matches' = m
 		mode: directQuery
 		source =

@@ -216,6 +216,13 @@ models:
           - accepted_values:
               values: ['home_win', 'away_win', 'draw']
 
+      - name: data_origin
+        description: "Sistema de origen del registro para auditoría desde Power BI: 'postgresql' (euro_matches_raw, Euro 2021) o 'mongodb' (eurocup, Euro 2024)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['postgresql', 'mongodb']
+
 
   # ========================
   # KPIs

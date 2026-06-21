@@ -39,13 +39,13 @@ class Analytics:
         """Load database configuration from Python file"""
         try:
             self.db_config = load_config(self.db_config_path, "DB_CONFIG")
-            print(f"✅ Database config loaded from {self.db_config_path}")
+            print(f"Database config loaded from {self.db_config_path}")
             return True
         except FileNotFoundError as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
             return False
         except AttributeError as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
             return False
 
     def _validate_gold_schema(self):
@@ -53,7 +53,7 @@ class Analytics:
         Validate that gold schema exists and tables are accessible.
         (Optional: can be enhanced to actually test the connection)
         """
-        print("ℹ️  Gold schema validation: Skipped (connection test in Power BI Desktop)")
+        print("Gold schema validation: Skipped (connection test in Power BI Desktop)")
         # In a more complete implementation, could use psycopg2 to test connection
         return True
 
@@ -63,7 +63,7 @@ class Analytics:
         Generates the PBIP project for Power BI.
         """
         print("\n" + "=" * 70)
-        print("📊 ANALYTICS: Generating Power BI PBIP Project")
+        print("ANALYTICS: Generating Power BI PBIP Project")
         print("=" * 70 + "\n")
 
         try:
@@ -82,10 +82,10 @@ class Analytics:
             project_path = generate_pbip_project(self.db_config, self.output_dir, self.project_name)
 
             print("\n" + "=" * 70)
-            print("✅ PBIP PROJECT GENERATED SUCCESSFULLY")
+            print("PBIP PROJECT GENERATED SUCCESSFULLY")
             print("=" * 70)
-            print(f"\n📍 Location: {project_path}")
-            print("\n📖 Next steps:")
+            print(f"\nLocation: {project_path}")
+            print("\nNext steps:")
             print("   1. Ensure PostgreSQL ODBC driver is installed on your machine")
             print("   2. Open Power BI Desktop")
             print("   3. Enable PBIP support: File → Options → Preview Features → Power BI Projects")
@@ -96,7 +96,7 @@ class Analytics:
             return True
 
         except Exception as e:
-            print(f"\n❌ ERROR in Analytics.run(): {e}")
+            print(f"\nERROR in Analytics.run(): {e}")
             traceback.print_exc()
             return False
 

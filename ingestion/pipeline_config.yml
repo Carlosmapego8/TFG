@@ -27,8 +27,7 @@ transformations:
     project_dir: "../transformation/tfg_dbt_project"
     command: build
 
-# Analytics component - generates Power BI PBIP project
 analytics:
   db_config_path: "db_config.py"
-  output_dir: "analysis"
+  output_dir: "../analysis"
   project_name: "euro_analysis"

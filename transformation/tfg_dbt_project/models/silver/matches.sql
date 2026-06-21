@@ -29,7 +29,8 @@ select
     tn.tournament_id,
     tg.group_id,
     m.home_goals,
-    m.away_goals
+    m.away_goals,
+    m.data_origin
 from bronze m
 left join tournament  tn      on tn.tournament_name = m.tournament_name
                               and tn.tournament_year = m.tournament_year

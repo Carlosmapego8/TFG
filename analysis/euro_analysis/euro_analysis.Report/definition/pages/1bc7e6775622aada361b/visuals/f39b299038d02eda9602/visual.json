@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "f39b299038d02eda9602",
+  "position": {
+    "x": 122.12733881639559,
+    "y": 179.76046499941373,
+    "z": 2000,
+    "height": 358.14871270875562,
+    "width": 504.97596274644468,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold dim_stadiums"
+                    }
+                  },
+                  "Property": "stadium_name"
+                }
+              },
+              "queryRef": "gold dim_stadiums.stadium_name",
+              "nativeQueryRef": "stadium_name",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold fct_matches"
+                    }
+                  },
+                  "Property": "data_origin"
+                }
+              },
+              "queryRef": "gold fct_matches.data_origin",
+              "nativeQueryRef": "data_origin"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "gold fct_matches"
+                        }
+                      },
+                      "Property": "away_goals"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fct_matches.away_goals)",
+              "nativeQueryRef": "away_goals",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "gold fct_matches"
+                        }
+                      },
+                      "Property": "home_goals"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fct_matches.home_goals)",
+              "nativeQueryRef": "home_goals"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

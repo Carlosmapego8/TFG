@@ -1,19 +1,38 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "6983388d83b6c88ce06a",
+  "name": "aa492f75c0155724075b",
   "position": {
-    "x": 23.670748253739593,
-    "y": 403.19219829337663,
-    "z": 1000,
-    "height": 280.86143843965868,
-    "width": 515.61064674450154,
-    "tabOrder": 1000
+    "x": 692.96973148628956,
+    "y": 197.59928977034792,
+    "z": 3000,
+    "height": 340.30988793782143,
+    "width": 533.7925258379538,
+    "tabOrder": 3000
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "scatterChart",
     "query": {
       "queryState": {
         "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold fct_matches"
+                    }
+                  },
+                  "Property": "data_origin"
+                }
+              },
+              "queryRef": "gold fct_matches.data_origin",
+              "nativeQueryRef": "data_origin",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
           "projections": [
             {
               "field": {
@@ -27,7 +46,30 @@
                 }
               },
               "queryRef": "gold dim_teams.team_name",
-              "nativeQueryRef": "team_name",
+              "nativeQueryRef": "team_name"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "gold fct_matches"
+                        }
+                      },
+                      "Property": "total_goals"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fct_matches.total_goals)",
+              "nativeQueryRef": "total_goals",
               "active": true
             }
           ]
@@ -52,72 +94,35 @@
               },
               "queryRef": "Sum(gold fct_matches.home_goals)",
               "nativeQueryRef": "home_goals"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "gold fct_matches"
-                        }
-                      },
-                      "Property": "away_goals"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(gold fct_matches.away_goals)",
-              "nativeQueryRef": "away_goals"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Aggregation": {
-                "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "gold fct_matches"
-                      }
-                    },
-                    "Property": "home_goals"
-                  }
-                },
-                "Function": 0
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
-    },
-    "drillFilterOtherVisuals": true
+    }
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "e3d7651a5291409ce499",
+        "name": "01705f8b540e4d70b24d",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "gold dim_teams"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "gold fct_matches"
+                  }
+                },
+                "Property": "total_goals"
               }
             },
-            "Property": "team_name"
+            "Function": 0
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
       },
       {
-        "name": "b8cb157464720bb617b9",
+        "name": "cb39bf7b89e628dd40d6",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -136,23 +141,32 @@
         "type": "Advanced"
       },
       {
-        "name": "13763d838506912e5b3e",
+        "name": "5e641473c085075c3e94",
         "field": {
-          "Aggregation": {
+          "Column": {
             "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "gold fct_matches"
-                  }
-                },
-                "Property": "away_goals"
+              "SourceRef": {
+                "Entity": "gold fct_matches"
               }
             },
-            "Function": 0
+            "Property": "data_origin"
           }
         },
-        "type": "Advanced"
+        "type": "Categorical"
+      },
+      {
+        "name": "bd3d01eb3578b9301ed3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold dim_teams"
+              }
+            },
+            "Property": "team_name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

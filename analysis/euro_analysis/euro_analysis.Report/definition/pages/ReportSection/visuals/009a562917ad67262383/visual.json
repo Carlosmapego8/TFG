@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "009a562917ad67262383",
   "position": {
-    "x": 526.93143938759442,
-    "y": 39.944737911418123,
+    "x": 527.96060235514835,
+    "y": 79.889475822836246,
     "z": 2000,
     "height": 279.61316537992684,
     "width": 420.92765372954318,
@@ -76,8 +76,7 @@
             },
             "direction": "Descending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -86,6 +85,7 @@
     "filters": [
       {
         "name": "e09259b5e079abe02d67",
+        "displayName": "Goles totales",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -102,20 +102,6 @@
           }
         },
         "type": "Advanced"
-      },
-      {
-        "name": "f63bed8feb3002527430",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "gold dim_groups"
-              }
-            },
-            "Property": "group_name"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

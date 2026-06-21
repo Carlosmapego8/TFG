@@ -21,5 +21,6 @@ select
         when home_goals > away_goals then 'home_win'
         when home_goals < away_goals then 'away_win'
         else 'draw'
-    end as result
+    end as result,
+    data_origin
 from matches

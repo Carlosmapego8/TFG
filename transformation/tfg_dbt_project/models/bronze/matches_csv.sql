@@ -33,5 +33,6 @@ select
         else null
     end                                                                               as group_name,
     nullif(split_part(result, ' - ', 1), '')::int                                     as home_goals,
-    nullif(split_part(result, ' - ', 2), '')::int                                     as away_goals
+    nullif(split_part(result, ' - ', 2), '')::int                                     as away_goals,
+    'postgresql'::text                                                                as data_origin
 from source

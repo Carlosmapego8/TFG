@@ -33,5 +33,6 @@ select
         else null
     end                                                                               as group_name,
     (match_data->'score'->'ft'->>0)::int                                              as home_goals,
-    (match_data->'score'->'ft'->>1)::int                                              as away_goals
+    (match_data->'score'->'ft'->>1)::int                                              as away_goals,
+    'mongodb'::text                                                                   as data_origin
 from unnested
