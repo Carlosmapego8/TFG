@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "f39b299038d02eda9602",
   "position": {
-    "x": 122.12733881639559,
-    "y": 179.76046499941373,
+    "x": 109.77738320574885,
+    "y": 181.13268228948559,
     "z": 2000,
     "height": 358.14871270875562,
     "width": 504.97596274644468,
@@ -99,5 +99,75 @@
         }
       }
     }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "43c41d390d01e3dc2605",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold dim_stadiums"
+              }
+            },
+            "Property": "stadium_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "52eacff9a07ee70060c4",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "gold fct_matches"
+                  }
+                },
+                "Property": "away_goals"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "37cfadf6e88c1a87a062",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "gold fct_matches"
+                  }
+                },
+                "Property": "home_goals"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9ccb280c255207936bac",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold fct_matches"
+              }
+            },
+            "Property": "data_origin"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

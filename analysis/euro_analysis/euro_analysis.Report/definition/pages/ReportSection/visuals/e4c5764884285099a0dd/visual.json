@@ -80,42 +80,5 @@
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "79a8ca5f40a2425d3794",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "gold dim_date"
-              }
-            },
-            "Property": "weekday"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "6dac4e275a5083cec629",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "gold fct_matches"
-                  }
-                },
-                "Property": "total_goals"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
